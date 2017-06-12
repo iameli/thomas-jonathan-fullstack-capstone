@@ -4,6 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 
 const loginRouter = require('./routes/login');
+const raidRouter = require('./routes/raid-management');
+const userRouter = require('./routes/user-management');
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(express.static('public'));
 
 //set routers
 app.use('/login/', loginRouter);
+app.use('/raid-management/', raidRouter);
+app.use('/user-management', userRouter);
 
 
 
