@@ -1,0 +1,23 @@
+{
+  "name": "thomas-jonathan-fullstack-capstone",
+  "version": "0.0.1",
+  "description": "A raid managing app that lets users create and join raid teams for Final Fantasy XIV.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkful-c11/thomas-jonathan-fullstack-capstone.git"
+  },
+  "author": "Thomas & Jonathan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkful-c11/thomas-jonathan-fullstack-capstone/issues"
+  },
+  "homepage": "https://github.com/thinkful-c11/thomas-jonathan-fullstack-capstone#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
