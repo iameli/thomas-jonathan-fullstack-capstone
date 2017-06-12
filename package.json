@@ -4,7 +4,7 @@
   "description": "A raid managing app that lets users create and join raid teams for Final Fantasy XIV.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js"
   },
   "repository": {
@@ -19,5 +19,10 @@
   "homepage": "https://github.com/thinkful-c11/thomas-jonathan-fullstack-capstone#readme",
   "dependencies": {
     "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.2"
   }
 }
