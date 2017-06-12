@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/thinkful-c11/thomas-jonathan-fullstack-capstone#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2"
   },
   "devDependencies": {
     "chai": "^4.0.2",

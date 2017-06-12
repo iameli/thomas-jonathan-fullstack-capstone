@@ -1,8 +1,25 @@
 'use strict';
 
-var express = require('express');
-var app = express();
+const express = require('express');
+const morgan = require('morgan');
+
+const loginRouter = require('./routes/login');
+
+const app = express();
+
+
+app.use(morgan('common'));
+
 app.use(express.static('public'));
+
+//set routers
+app.use('/login/', loginRouter);
+
+
+
+
+
+
 app.listen(process.env.PORT || 8080);
 
 

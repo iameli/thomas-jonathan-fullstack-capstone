@@ -25,4 +25,18 @@ describe('MVP', () => {
         });
     });
   });
+
+  describe('Login URL', function() {
+    it('should respond with a status of 200 and HTML', function() {
+      return chai.request(app)
+      .get('/login/')
+      .then(function(result) {
+        result.should.have.status(200);
+        result.should.be.html;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    });
+  });
 });
