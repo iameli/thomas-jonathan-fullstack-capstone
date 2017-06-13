@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 const { User, Raid } = require('./models');
 const {PORT, DATABASE_URL} = require('./config');
 const loginRouter = require('./routes/login');
-const raidRouter = require('./routes/raid-management');
-const userRouter = require('./routes/user-management');
+const raidRouter = require('./routes/raid');
+const userRouter = require('./routes/user');
 
 mongoose.Promise = global.Promise;
 
@@ -20,55 +20,13 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 
 //set routers
-app.use('/login/', loginRouter);
-app.use('/raid-management/', raidRouter);
-app.use('/user-management', userRouter);
+// app.use('/login/', loginRouter);
+// app.use('/raid-management/', raidRouter);
+// app.use('/user-management', userRouter);
+app.use('/raid', raidRouter);
+app.use('/user', userRouter);
 
 
-app.get('/raid', (req, res) => {
-  return Raid
-    .find()
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
-    .exec()
-    .then(arrayOfTeams => {
-      res.json(arrayOfTeams.map(
-          (team) => team.apiRepr()
-        )
-      );
-    })
-    .catch(err => {
-      res.send(err);
-    });
-});
-
-app.get('/raid/:id', (req, res) => {
-  return Raid
-    .findById(req.params.id)
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
-    .exec()
-    .then(team => {
-      res.json(team.apiRepr());
-    })
-    .catch(err => {
-      res.send(err);
-    });
-});
-
-app.get('/user', (req, res) => {
-  return User
-    .find()
-    .populate('team')
-    .exec()
-    .then(users => {
-      res.json(users.map(
-          (user) => user.apiRepr()
-        )
-      );
-    })
-    .catch(err => {
-      res.send(err);
-    });
-});
 
 // app.listen(process.env.PORT || 8080);
 

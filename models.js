@@ -29,14 +29,14 @@ const userSchema = mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
   email: {type: String, required: true},
-  discord: {type: String, required: true},
+  discord: {type: String, required: false},
   playerName: {
     firstName: {type: String, required: true},
-    lastName: {type: String, required: false}
+    lastName: {type: String, required: true}
   },
   playerClass: [{
-    className: {type: String, required: true},
-    level: {type: Number, required: true}
+    className: {type: String, required: false},
+    level: {type: Number, required: false}
   }],
   team: {type: Schema.Types.ObjectId, ref: 'Raid'}
 });
