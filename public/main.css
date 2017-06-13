@@ -36,7 +36,6 @@ header {
 }
 .row {
   width: 100%;
-  margin: 0 6em;
 }
 .col-8 {
   width: 66.67%;
@@ -125,4 +124,10 @@ header {
 }
 .callout-right a {
   text-decoration: none;
+}
+
+.filter-box {
+  border: 1px solid black;
+  position: absolute;
+  float: right;
 }
