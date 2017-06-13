@@ -46,138 +46,149 @@ raidSchema.methods.apiRepr = function() {
   const healers = [];
   const dps = [];
 
-  if(!this.paladin.isEmpty()){
+  // if(this.monk.length !== 0) {
+  //   this.monk.forEach(user => {
+  //     console.log(user);
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Monk'
+  //     });
+  //   });
+  // }
+
+  if(this.paladin.length !== 0) {
     this.paladin.forEach(function(user) {
-      tanks.push({
-        id: user._id,
+      return tanks.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'paladin'
+        class: 'Paladin'
       });
     });
   }
-  if(!this.warrior.isEmpty()){
+  if(this.warrior.length !== 0) {
     this.warrior.forEach(function(user) {
-      tanks.push({
-        id: user._id,
+      return tanks.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'warrior'
+        class: 'Warrior'
       });
     });
   }
-  if(!this.darkKnight.isEmpty()){
+  if(this.darkKnight.length !== 0) {
     this.darkKnight.forEach(function(user) {
-      tanks.push({
-        id: user._id,
+      return tanks.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'darkKnight'
+        class: 'Dark Knight'
       });
     });
   }
-  if(!this.whiteMagescholar.isEmpty()){
-    this.whiteMagescholar.forEach(function(user) {
-      healers.push({
-        id: user._id,
+  if(this.whiteMage.length !== 0) {
+    this.whiteMage.forEach(function(user) {
+      return healers.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'whiteMage'
+        class: 'White Mage'
       });
     });
   }
-  if(!this.scholar.isEmpty()){
+  if(this.scholar.length !== 0) {
     this.scholar.forEach(function(user) {
-      healers.push({
-        id: user._id,
+      return healers.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'scholar'
+        class: 'Scholar'
       });
     });
   }
-  if(!this.astrologian.isEmpty()){
+  if(this.astrologian.length !== 0){
     this.astrologian.forEach(function(user) {
-      healers.push({
-        id: user._id,
+      return healers.push({
+        id: user.id,
         playerName: user.playerName,
         class: 'astrologian'
       });
     });
   }
-  if(!this.dragoon.isEmpty()){
+  if(this.dragoon.length !== 0){
     this.dragoon.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'dragoon'
+        class: 'Dragoon'
       });
     });
   }
-  if(!this.monk.isEmpty()){
+  if(this.monk.length !== 0) {
     this.monk.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'monk'
+        class: 'Monk'
       });
     });
   }
-  if(!this.ninja.isEmpty()){
+  if(this.ninja.length !== 0) {
     this.ninja.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'ninja'
+        class: 'Ninja'
       });
     });
   }
-  if(!this.samurai.isEmpty()){
+  if(this.samurai.length !== 0) {
     this.samurai.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'samurai'
+        class: 'Samurai'
       });
     });
   }
-  if(!this.redMage.isEmpty()){
+  if(this.redMage.length !== 0) {
     this.redMage.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'redMage'
+        class: 'Red Mage'
       });
     });
   }
-  if(!this.summoner.isEmpty()){
+  if(this.summoner.length !== 0) {
     this.summoner.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'summoner'
+        class: 'Summoner'
       });
     });
   }
-  if(!this.blackMage.isEmpty()){
+  if(this.blackMage.length !== 0) {
     this.blackMage.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'blackMage'
+        class: 'Black Magic'
       });
     });
   }
-  if(!this.machinistbard.isEmpty()){
+  if(this.bard.length !== 0) {
     this.bard.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'bard'
+        class: 'Bard'
       });
     });
   }
-  if(!this.machinist.isEmpty()){
+  if(this.machinist.length !== 0) {
     this.machinist.forEach(function(user) {
-      dps.push({
-        id: user._id,
+      return dps.push({
+        id: user.id,
         playerName: user.playerName,
-        class: 'machinist'
+        class: 'Machinist'
       });
     });
   }
@@ -195,17 +206,17 @@ raidSchema.methods.apiRepr = function() {
   };
 };
 
-userSchema.methods.apiRepr = function() {
-  return {
-    id: this._id,
-    username: this.username,
-    email: this.email,
-    discord: this.discord,
-    playerName: this.playerName,
-    playerClass: this.playerClass,
-    team: this.team
-  };
-};
+// userSchema.methods.apiRepr = function() {
+//   return {
+//     id: this._id,
+//     username: this.username,
+//     email: this.email,
+//     discord: this.discord,
+//     playerName: this.playerName,
+//     playerClass: this.playerClass,
+//     team: this.team
+//   };
+// };
 
 const User = mongoose.model('User', userSchema);
 const Raid = mongoose.model('Raid', raidSchema);

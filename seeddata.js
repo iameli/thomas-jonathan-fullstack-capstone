@@ -108,19 +108,19 @@ const usersToCreate = [
   }
 ];
 
-mongoose.connect(DATABASE_URL, err => {
-  if (err) {
-    console.error(err);
-  }
-  User
-    .insertMany(usersToCreate)
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-});
+// mongoose.connect(DATABASE_URL, err => {
+//   if (err) {
+//     console.error(err);
+//   }
+//   User
+//     .insertMany(usersToCreate)
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//     });
+// });
 
 const teamsToCreate = [
   {
@@ -138,16 +138,16 @@ const teamsToCreate = [
   }
 ];
 
-mongoose.connect(DATABASE_URL, err => {
-  if (err) {
-    console.error(err);
-  }
-  Raid
-    .insertMany(teamsToCreate)
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-});
+// mongoose.connect(DATABASE_URL, err => {
+//   if (err) {
+//     console.error(err);
+//   }
+//   Raid
+//     .insertMany(teamsToCreate)
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//     });
+// });

@@ -10,6 +10,8 @@ const loginRouter = require('./routes/login');
 const raidRouter = require('./routes/raid-management');
 const userRouter = require('./routes/user-management');
 
+mongoose.Promise = global.Promise;
+
 const app = express();
 
 
@@ -28,18 +30,16 @@ app.get('/raid', (req, res) => {
     .find()
     .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
     .exec()
-    .then(response => {
-      res.status(200).json(response);
+    .then(arrayOfTeams => {
+      res.json(arrayOfTeams.map(
+          (team) => team.apiRepr()
+        )
+      );
     })
     .catch(err => {
       res.send(err);
     });
 });
-
-
-
-
-
 
 
 
