@@ -1,0 +1,50 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: : border-box;
+}
+
+body {
+  background-color: #eae3dc;
+}
+
+header {
+  height: 6em;
+  background-color: #13093d;
+  color: #f2f2f2;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+footer {
+  height: 2em;
+  background-color: #13093d;
+  color: #f2f2f2;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+header h2 {
+  color: #f2f2f2;
+  font-size: 3em;
+  letter-spacing: 0.2em;
+  padding-left: 0.5em;
+  margin-top: .1em;
+}
+
+.container {
+  margin: 6em auto -2em auto;
+  padding: 0 3em;
+}
+.row {
+  width: 100%;
+}
+
+.account-controls {
+  color: #f2f2f2;
+  text-decoration: none;
+  float: right;
+}
