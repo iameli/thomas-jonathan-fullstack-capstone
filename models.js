@@ -46,17 +46,6 @@ raidSchema.methods.apiRepr = function() {
   const healers = [];
   const dps = [];
 
-  // if(this.monk.length !== 0) {
-  //   this.monk.forEach(user => {
-  //     console.log(user);
-  //     return dps.push({
-  //       id: user.id,
-  //       playerName: user.playerName,
-  //       class: 'Monk'
-  //     });
-  //   });
-  // }
-
   if(this.paladin.length !== 0) {
     this.paladin.forEach(function(user) {
       return tanks.push({
@@ -194,6 +183,7 @@ raidSchema.methods.apiRepr = function() {
   }
 
   return {
+    id: this._id,
     name: this.name,
     leader: this.leader,
     time: this.time,

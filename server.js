@@ -41,6 +41,19 @@ app.get('/raid', (req, res) => {
     });
 });
 
+app.get('/raid/:id', (req, res) => {
+  return Raid
+    .findById(req.params.id)
+    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .exec()
+    .then(team => {
+      res.json(team.apiRepr());
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
 app.get('/user', (req, res) => {
   return User
     .find()
