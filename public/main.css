@@ -1,10 +1,11 @@
 * {
   font-family: 'Open Sans', sans-serif;
+  box-sizing: inherit;
 }
 
 body {
   background-color: #f2f2f2;
-  box-sizing: : border-box;
+  box-sizing: border-box;
   width: 100%;
 }
 
@@ -50,6 +51,12 @@ header {
 }
 .col-3 {
  width: 25%;
+}
+.column-left {
+  float: left;
+}
+.column-right {
+  float: right;
 }
 .button {
   padding: 0.75em;
@@ -127,6 +134,7 @@ header {
   text-decoration: none;
 }
 
+/*Home Page Filters Styling*/
 .filter-box {
   position: relative;
   float: right;
@@ -134,4 +142,22 @@ header {
 .sticky-top {
   position: fixed;
   top: 9em;
+}
+
+.nav-bar {
+  padding-top: 7em;
+}
+.nav-tab {
+  border-top: 2px solid #318689;
+  border-right: 2px solid #318689;
+  border-radius: 3px;
+  color: #000000;
+  padding: 1.5em;
+}
+.nav-list li {
+  list-style-type: none;
+  display: inline;
+}
+.nav-list a {
+  text-decoration: none;
 }
