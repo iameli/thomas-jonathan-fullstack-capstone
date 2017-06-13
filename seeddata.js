@@ -125,29 +125,29 @@ const usersToCreate = [
 const teamsToCreate = [
   {
     name: faker.company.companyName(),
-    leader: '5940107c9fcaec37c549082f',
+    leader: '59403bcd729a5924c42ce2e4',
     applicants: [
-      '5940107c9fcaec37c5490833', '5940107c9fcaec37c5490836'
+      '59403bcd729a5924c42ce2eb', '59403bcd729a5924c42ce2ef'
     ],
-    darkKnight: ['5940107c9fcaec37c549083e'],
-    warrior: ['5940107c9fcaec37c5490842'],
-    whiteMage: ['5940107c9fcaec37c549084a'],
-    ninja: ['5940107c9fcaec37c5490846'],
-    dragoon: ['5940107c9fcaec37c549083a'],
-    monk: ['5940107c9fcaec37c549084e']
+    darkKnight: ['59403bcd729a5924c42ce2f3'],
+    warrior: ['59403bcd729a5924c42ce2f7'],
+    whiteMage: ['59403bcd729a5924c42ce2ff'],
+    ninja: ['59403bcd729a5924c42ce2fb'],
+    dragoon: ['59403bcd729a5924c42ce2e4','59403bcd729a5924c42ce2e8'],
+    monk: ['59403bcd729a5924c42ce303']
   }
 ];
 
-// mongoose.connect(DATABASE_URL, err => {
-//   if (err) {
-//     console.error(err);
-//   }
-//   Raid
-//     .insertMany(teamsToCreate)
-//     .then(response => {
-//       console.log(response);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//     });
-// });
+mongoose.connect(DATABASE_URL, err => {
+  if (err) {
+    console.error(err);
+  }
+  Raid
+    .insertMany(teamsToCreate)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});

@@ -206,17 +206,17 @@ raidSchema.methods.apiRepr = function() {
   };
 };
 
-// userSchema.methods.apiRepr = function() {
-//   return {
-//     id: this._id,
-//     username: this.username,
-//     email: this.email,
-//     discord: this.discord,
-//     playerName: this.playerName,
-//     playerClass: this.playerClass,
-//     team: this.team
-//   };
-// };
+userSchema.methods.apiRepr = function() {
+  return {
+    id: this._id,
+    username: this.username,
+    email: this.email,
+    discord: this.discord,
+    playerName: this.playerName,
+    playerClass: this.playerClass,
+    team: this.team
+  };
+};
 
 const User = mongoose.model('User', userSchema);
 const Raid = mongoose.model('Raid', raidSchema);

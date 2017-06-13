@@ -41,7 +41,21 @@ app.get('/raid', (req, res) => {
     });
 });
 
-
+app.get('/user', (req, res) => {
+  return User
+    .find()
+    .populate('team')
+    .exec()
+    .then(users => {
+      res.json(users.map(
+          (user) => user.apiRepr()
+        )
+      );
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
 
 // app.listen(process.env.PORT || 8080);
 
@@ -50,7 +64,7 @@ app.get('/raid', (req, res) => {
 let server;
 
 // this function connects to our database, then starts the server
-function runServer(databaseUrl=DATABASE_URL, port=3000) {
+function runServer(databaseUrl=DATABASE_URL, port = PORT) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
