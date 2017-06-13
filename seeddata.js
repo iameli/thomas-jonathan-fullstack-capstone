@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const {DATABASE_URL} = require('./config');
 const faker = require('faker');
 
+// array of objects mapped to our Schema
 const usersToCreate = [
   {
     username: faker.internet.userName(),
@@ -107,19 +108,19 @@ const usersToCreate = [
   }
 ];
 
-// mongoose.connect(DATABASE_URL, err => {
-//   if (err) {
-//     console.error(err);
-//   }
-//   User
-//     .insertMany(usersToCreate)
-//     .then(response => {
-//       console.log(response);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//     });
-// });
+mongoose.connect(DATABASE_URL, err => {
+  if (err) {
+    console.error(err);
+  }
+  User
+    .insertMany(usersToCreate)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
 
 const teamsToCreate = [
   {

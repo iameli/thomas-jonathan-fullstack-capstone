@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
+const { User, Raid } = require('./models');
 const {PORT, DATABASE_URL} = require('./config');
 const loginRouter = require('./routes/login');
 const raidRouter = require('./routes/raid-management');
@@ -22,6 +23,22 @@ app.use('/raid-management/', raidRouter);
 app.use('/user-management', userRouter);
 
 
+app.get('/raid', (req, res) => {
+  return Raid
+    .find()
+    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .exec()
+    .then(response => {
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+
+
+
 
 
 
@@ -33,7 +50,7 @@ app.use('/user-management', userRouter);
 let server;
 
 // this function connects to our database, then starts the server
-function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+function runServer(databaseUrl=DATABASE_URL, port=3000) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
