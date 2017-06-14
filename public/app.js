@@ -5,18 +5,19 @@ const appState = {
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
-function fetchTeams(callback) {
-  $.ajax({
+function fetchTeams() {
+  return $.ajax({
     method: 'GET',
     url: '/raid',
-    success: response => {
-      callback(response);
-    }
   });
 }
 // IN WHICH WE MODIFY THE STATE
 function loadData(data) {
   appState.raidTeams = data;
+}
+
+function updateState(data, state) {
+  state.raidTeams = data;
 }
 // IN WHICH WE RENDER
 function render(state) {
@@ -45,15 +46,11 @@ function render(state) {
 // IN WHICH WE HANDLE THE EVENTS
 
 // IN WHICH WE LOAD
-// function initialLoad() {
-//   return Promise.resolve(fetchTeams(loadData))
-//     .then(response => {
-//       console.log(response);
-//       render(appState);
-//     });
-// }
 function initialLoad() {
-  return Promise.resolve(fetchTeams(loadData)).then(() => render(appState));
+  return fetchTeams().then((res) => {
+    updateState(res, appState);
+    render(appState);
+  });
 }
 $(function() {
   // fetchTeams(loadData);
@@ -61,3 +58,16 @@ $(function() {
 
   initialLoad();
 });
+
+
+
+// Testing out some variations
+// const initialLoad = new Promise((resolve, reject) => {
+//   return fetchTeams(function(data){
+//     //dostuff
+//     appState.raidTeams = data;
+//     resolve(appState)
+//   })
+// })
+//
+// return Promise.resolve(fetchTeams(loadData)).then(() => render(appState));
