@@ -191,6 +191,7 @@ header {
   padding-right: 1em;
 }
 .team-member-thumb {
+  margin-top: 2em;
   max-width: 100%;
   box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
   border-radius: 50%;

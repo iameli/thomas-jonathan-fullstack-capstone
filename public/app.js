@@ -213,8 +213,7 @@ function eventHandlers() {
   });
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
-    const element = e.currentTarget.closest('[data-id]').dataset.id;
-    console.log(element);
+    const dataId = e.currentTarget.closest('[data-id]').dataset.id;
   });
 }
 // IN WHICH WE LOAD
