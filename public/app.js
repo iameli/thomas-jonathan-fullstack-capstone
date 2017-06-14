@@ -145,6 +145,25 @@ function render(state) {
 
     $('.team-members-content').html(memberPosts);
   }
+  function addApplicantsToAccountPage() {
+    const applicants = state.myTeam.applicants;
+    let applicantsPosts = '';
+    applicants.forEach(applicant => {
+      applicantsPosts += `<div class="row">
+                        <div class="team-member">
+                          <div class="col-3 column-left">
+                            <img class="team-member-thumb" src="http://placehold.it/200/200" alt="Team member image">
+                          </div>
+                          <div class="col-9 column-right">
+                            <h5>${applicant.playerName.firstName} ${applicant.playerName.lastName}</h5>
+                            <h6>Classes: <small>!!!!!!!</small></h6>
+                            <p>Tilde drinking vinegar pok pok, swag raw denim pork belly crucifix raclette air plant authentic kinfolk wolf helvetica synth thundercats. Neutra copper mug 8-bit gochujang. Af venmo vexillologist fashion axe, narwhal schlitz artisan portland.</p>
+                          </div>
+                        </div>
+                      </div>`;
+    });
+    $('.team-members-content').html(applicantsPosts);
+  }
 
 
   if (state.activePage === 'home') {
@@ -152,26 +171,37 @@ function render(state) {
   } else if (state.activePage === 'account-members') {
     renderAccountPage();
     addMembersToAccountPage();
-
+  } else if (state.activePage === 'account-applicants') {
+    renderAccountPage();
+    addApplicantsToAccountPage();
   }
 }
+
 // IN WHICH WE HANDLE THE EVENTS
 function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState, 'account-members');
     render(appState);
+    eventHandlers();
   });
   $('#home-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState,'home');
     render(appState);
+    eventHandlers();
   });
   $('#team-members-link').on('click', e => {
     e.preventDefault();
+    setActivePage(appState,'account-members');
+    render(appState);
+    eventHandlers();
   });
   $('#team-applicants-link').on('click', e => {
     e.preventDefault();
+    setActivePage(appState,'account-applicants');
+    render(appState);
+    eventHandlers();
   });
 }
 // IN WHICH WE LOAD
