@@ -59,12 +59,12 @@ function seedRaidData(data) {
     applicants: [
       data[1].id, data[1].id
     ],
-    darkKnight: [data[3].id],
-    warrior: [data[4].id],
-    whiteMage: [data[5].id],
-    ninja: [data[6].id],
-    dragoon: [data[7].id,data[8].id],
-    monk: [data[9].id]
+    darkKnights: [data[3].id],
+    warriors: [data[4].id],
+    whiteMages: [data[5].id],
+    ninjas: [data[6].id],
+    dragoons: [data[7].id,data[8].id],
+    monks: [data[9].id]
   };
 
   return Raid.create(testRaid);

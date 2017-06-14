@@ -39,6 +39,7 @@ router.get('/', (req, res) => {
     .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
     .exec()
     .then(arrayOfTeams => {
+      console.log(arrayOfTeams);
       res.json(arrayOfTeams.map(
           (team) => team.apiRepr()
         )
