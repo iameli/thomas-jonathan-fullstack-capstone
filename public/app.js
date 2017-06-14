@@ -26,6 +26,7 @@ function setMyTeam(state, myId) {
 }
 // IN WHICH WE RENDER
 function render(state) {
+
   function renderHomePage() {
     const filterBox = `<div class="row">
                         <div class="col-3 filter-box">
@@ -62,7 +63,6 @@ function render(state) {
     $('.content-root').html(teamPosts);
   }
   function renderAccountPage() {
-    const members = state.myTeam.members;
     // HTML components
     const navBar = `<div class="row nav-bar">
                       <nav aria-label="Navigation bar" role="navigation">
@@ -78,7 +78,7 @@ function render(state) {
                             <img class="team-thumb" src="http://placehold.it/650x350" alt="Raid team thumbnail image" />
                           </div>
                           <div class="col-6 column-right">
-                            <h3>Team Name!!</h3>
+                            <h3>${state.myTeam.name} <small>${state.myTeam.time}</small></h3>
                             <p>Meggings microdosing XOXO sartorial butcher hot chicken post-ironic, drinking vinegar asymmetrical lomo hashtag hexagon. Drinking vinegar hexagon coloring book franzen. Et photo booth lumbersexual, irony chartreuse beard tumblr magna cliche post-ironic. Occupy locavore forage, scenester eu mumblecore kale chips. Esse you probably haven't heard of them id +1 try-hard next level. Jianbing edison bulb readymade, dreamcatcher kale chips adipisicing chartreuse typewriter godard lyft dolor williamsburg bespoke anim. Austin aute vice ennui, plaid dolore mlkshk man braid in.
                             </p>
                           </div>
@@ -86,11 +86,19 @@ function render(state) {
     const contentDivider = `<hr>
                             <div class="col-12">
                               <ul class="nav-list">
-                                <li><a class="team-member-toggle" href="#">Team Members</a></li>
-                                <li><a class="team-member-toggle" href="#">Applicants</a></li>
+                                <li><a id="team-members-link" class="team-member-toggle" href="#">Team Members</a></li>
+                                <li><a id="team-applicants-link" class="team-member-toggle" href="#">Applicants</a></li>
                               </ul>
                               <br>
+                            </div>
+                            <div class="team-members-content">
                             </div>`;
+
+    const renderString = navBar + myTeam + contentDivider;
+    $('.content-root').html(renderString);
+  }
+  function addMembersToAccountPage() {
+    const members = state.myTeam.members;
     let memberPosts = '';
     members.dps.forEach(member => {
       memberPosts += `<div class="row">
@@ -134,27 +142,36 @@ function render(state) {
                         </div>
                       </div>`;
     });
-    const renderString = navBar + myTeam + contentDivider + memberPosts;
-    $('.content-root').html(renderString);
+
+    $('.team-members-content').html(memberPosts);
   }
 
+
   if (state.activePage === 'home') {
-    return renderHomePage();
-  } else if (state.activePage === 'account') {
-    return renderAccountPage();
+    renderHomePage();
+  } else if (state.activePage === 'account-members') {
+    renderAccountPage();
+    addMembersToAccountPage();
+
   }
 }
 // IN WHICH WE HANDLE THE EVENTS
 function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState, 'account');
+    setActivePage(appState, 'account-members');
     render(appState);
   });
   $('#home-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState,'home');
     render(appState);
+  });
+  $('#team-members-link').on('click', e => {
+    e.preventDefault();
+  });
+  $('#team-applicants-link').on('click', e => {
+    e.preventDefault();
   });
 }
 // IN WHICH WE LOAD
