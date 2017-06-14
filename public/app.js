@@ -85,7 +85,11 @@ function render(state) {
                         </div>`;
     const contentDivider = `<hr>
                             <div class="col-12">
-                              <h4>Team Members</h4>
+                              <ul class="nav-list">
+                                <li><a class="team-member-toggle" href="#">Team Members</a></li>
+                                <li><a class="team-member-toggle" href="#">Applicants</a></li>
+                              </ul>
+                              <br>
                             </div>`;
     let memberPosts = '';
     members.dps.forEach(member => {

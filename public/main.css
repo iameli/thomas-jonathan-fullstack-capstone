@@ -166,6 +166,9 @@ header {
   color: #000000;
   padding: 1.5em;
 }
+.nav-list {
+  padding-left: 0;
+}
 .nav-list li {
   list-style-type: none;
   display: inline;
@@ -174,6 +177,10 @@ header {
   text-decoration: none;
 }
 
+.team-member-toggle {
+  color: #000000;
+  padding-right: 1em;
+}
 .team-member-thumb {
   max-width: 100%;
   box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
