@@ -1,5 +1,6 @@
 'use strict';
 
+const bodyParser = require('body-parser');
 const express = require('express');
 const router = express.Router();
 const morgan = require('morgan');
@@ -7,28 +8,12 @@ const mongoose = require('mongoose');
 const {Raid} = require('../models');
 
 mongoose.Promise = global.Promise;
+router.use(bodyParser.json());
 
-// router.put('/accept/:id' , (req, res) => {
-//   const updated = {};
-//   const updateableFields = ['applicants',];
-//   updateableFields.forEach(field => {
-//     if ( field in req.body) {
-//       updated[field] = req.body[field];
-//     }
-//   });
-//
-//   Raid
-//    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-//    .exec()
-//    .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
-//    .catch(err => res.status(500).json({message: 'Something went wrong'}));
-// });
-
-router.put('/updateRaid/:id', (req,res) => {
-
+router.put('/:id', (req,res) => {
   const updated = {};
-  const updateableFields = req.body.updateFields;
-  updateableFields.forEach(field => {
+  const updateableData = Object.keys(req.body);
+  updateableData.forEach(field => {
     if ( field in req.body) {
       updated[field] = req.body[field];
     }
@@ -36,8 +21,9 @@ router.put('/updateRaid/:id', (req,res) => {
 
   Raid
    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+   .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
    .exec()
-   .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
+   .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
@@ -59,7 +45,8 @@ router.get('/', (req, res) => {
       );
     })
     .catch(err => {
-      res.send(err);
+      console.error(err);
+      res.sendStatus(500);
     });
 });
 
@@ -72,7 +59,8 @@ router.get('/:id', (req, res) => {
       res.json(team.apiRepr());
     })
     .catch(err => {
-      res.send(err);
+      console.error(err);
+      res.sendStatus(500);
     });
 });
 

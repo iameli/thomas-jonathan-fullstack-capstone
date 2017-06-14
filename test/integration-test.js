@@ -100,9 +100,6 @@ describe('MVP', function() {
         .then(function(result) {
           result.should.have.status(200);
           result.should.be.html;
-        })
-        .catch(err => {
-          console.error(err);
         });
     });
   });
@@ -122,9 +119,6 @@ describe('MVP', function() {
        })
        .then(count => {
          res.body.should.have.lengthOf(count);
-       })
-       .catch(err => {
-         console.error(err);
        });
     });
 
@@ -138,15 +132,95 @@ describe('MVP', function() {
          return User.findById(res.body[0].id);
        })
        .then(_user => {
-         user = _user;
-         return User.findById(user.id);
+         return User.findById(_user.id);
        })
        .then(_user => {
-
-       })
-       .catch(err => {
-         console.error(err);
+         user = _user;
+         user.id.should.be.equal(res.body[0].id);
        });
+    });
+  });
+
+  describe('Raid endpoint', function() {
+
+    it('should return with an array of teams', function() {
+      let res;
+      return chai.request(app)
+        .get('/raid')
+        .then(function(_result) {
+          // console.log(_result.body[0].members);
+          res = _result;
+          res.should.be.json;
+          res.should.have.status(200);
+          res.body.should.have.length.of.at.least(1);
+
+          return Raid.count();
+        })
+        .then(count => {
+          res.body.should.have.lengthOf(count);
+        });
+    });
+
+    it('should return a single raid team when passed an id', function() {
+      let raid;
+      let res;
+      return chai.request(app)
+       .get('/raid')
+        .then(function(_result) {
+          res = _result;
+          return Raid.findById(res.body[0].id);
+        })
+       .then(_raid => {
+         return Raid.findById(_raid.id);
+       })
+         .then(_raid => {
+           raid = _raid;
+           raid.id.should.be.equal(res.body[0].id);
+         });
+    });
+
+    it('should update a raid team with given data', function() {
+      let testRaid;
+      const updateData = {
+        name: 'Test name',
+        paladin: []
+      };
+
+      return Raid.findOne()
+        .exec()
+        .then(raid => {
+          testRaid = raid;
+          updateData.id = raid.id;
+          updateData.paladin.push(raid.applicants[0]);
+          updateData.applicants = raid.applicants.splice(0,1);
+          return chai.request(app)
+            .put(`/raid/${raid.id}`)
+            .send(updateData);
+        })
+        .then(res => {
+          let classTest = false;
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.name.should.equal(updateData.name);
+          res.body.applicants.forEach((applicant, index) => {
+            applicant._id.should.equal(updateData.applicants[index].toString());
+          });
+          res.body.members.tanks.forEach(tank => {
+            if(tank.id === updateData.paladin[0].toString() && tank.class === 'Paladin') {
+              classTest = true;
+            }
+          });
+          classTest.should.be.true;
+
+          return Raid.findById(res.body.id).exec();
+        })
+        .then(raid => {
+          raid.name.should.equal(updateData.name);
+          // raid.applicants.should.equal(updateData.applicants);
+          // raid.paladin.should.equal(updateData.paladin);
+        });
+
     });
   });
 

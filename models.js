@@ -48,6 +48,7 @@ raidSchema.methods.apiRepr = function() {
 
   if(this.paladin.length !== 0) {
     this.paladin.forEach(function(user) {
+      // console.log('user:', user);
       return tanks.push({
         id: user.id,
         playerName: user.playerName,
@@ -58,7 +59,7 @@ raidSchema.methods.apiRepr = function() {
   if(this.warrior.length !== 0) {
     this.warrior.forEach(function(user) {
       return tanks.push({
-        id: user.id,
+        id: user._id,
         playerName: user.playerName,
         class: 'Warrior'
       });
@@ -67,7 +68,7 @@ raidSchema.methods.apiRepr = function() {
   if(this.darkKnight.length !== 0) {
     this.darkKnight.forEach(function(user) {
       return tanks.push({
-        id: user.id,
+        id: user._id,
         playerName: user.playerName,
         class: 'Dark Knight'
       });
