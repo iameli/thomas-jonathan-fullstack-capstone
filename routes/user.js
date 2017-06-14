@@ -5,8 +5,11 @@ const router = express.Router();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const {User} = require('../models');
+const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
+
+router.use(bodyParser.json());
 
 
 router.get('/', (req, res) => {
@@ -15,7 +18,7 @@ router.get('/', (req, res) => {
     .populate('team')
     .exec()
     .then(users => {
-      res.json(users.map(
+      res.status(200).json(users.map(
           (user) => user.apiRepr()
         )
       );

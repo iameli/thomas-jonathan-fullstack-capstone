@@ -8,8 +8,46 @@ const {Raid} = require('../models');
 
 mongoose.Promise = global.Promise;
 
+// router.put('/accept/:id' , (req, res) => {
+//   const updated = {};
+//   const updateableFields = ['applicants',];
+//   updateableFields.forEach(field => {
+//     if ( field in req.body) {
+//       updated[field] = req.body[field];
+//     }
+//   });
+//
+//   Raid
+//    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+//    .exec()
+//    .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
+//    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+// });
+
+router.put('/updateRaid/:id', (req,res) => {
+
+  const updated = {};
+  const updateableFields = req.body.updateFields;
+  updateableFields.forEach(field => {
+    if ( field in req.body) {
+      updated[field] = req.body[field];
+    }
+  });
+
+  Raid
+   .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+   .exec()
+   .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
+   .catch(err => res.status(500).json({message: 'Something went wrong'}));
+});
+
+
+// router.put('/apply/:id', (req,res) => {
+//
+// });
 
 router.get('/', (req, res) => {
+
   Raid
     .find()
     .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
@@ -31,7 +69,6 @@ router.get('/:id', (req, res) => {
     .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
     .exec()
     .then(team => {
-      console.log(team.apiRepr());
       res.json(team.apiRepr());
     })
     .catch(err => {
