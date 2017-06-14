@@ -37,6 +37,15 @@ header {
 }
 .row {
   width: 100%;
+  overflow: hidden;
+}
+.col-12 {
+  width: 100%;
+  padding: 1em;
+}
+.col-9 {
+  width: 75%;
+  padding: 1em;
 }
 .col-8 {
   width: 66.67%;
@@ -51,6 +60,7 @@ header {
 }
 .col-3 {
  width: 25%;
+ padding: 1em;
 }
 .column-left {
   float: left;
@@ -122,6 +132,7 @@ header {
 }
 .callout-left {
   float: left;
+  list-style-type: none;
 }
 .callout-right {
   float: right;
@@ -145,10 +156,11 @@ header {
 }
 
 .nav-bar {
-  padding-top: 7em;
+  padding-top: 3em;
+  padding-bottom: .6em;
 }
 .nav-tab {
-  border-top: 2px solid #318689;
+  border-bottom: 2px solid #318689;
   border-right: 2px solid #318689;
   border-radius: 3px;
   color: #000000;
@@ -160,4 +172,10 @@ header {
 }
 .nav-list a {
   text-decoration: none;
+}
+
+.team-member-thumb {
+  max-width: 100%;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  border-radius: 50%;
 }
