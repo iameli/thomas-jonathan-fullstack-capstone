@@ -8,21 +8,21 @@ const raidSchema = mongoose.Schema({
   leader: {type: Schema.Types.ObjectId, ref: 'User'},
   time: {type: Date, default: Date.now},
   applicants: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  paladin: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  warrior: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  darkKnight: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  whiteMage: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  scholar: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  astrologian: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  ninja: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  dragoon: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  samurai: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  monk: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  redMage: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  summoner: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  blackMage: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  bard: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  machinist: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  paladins: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  warriors: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  darkKnights: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  whiteMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  scholars: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  astrologians: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  ninjas: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  dragoons: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  samurais: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  monks: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  redMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  summoners: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  blackMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  bards: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  machinists: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 const userSchema = mongoose.Schema({
@@ -46,8 +46,8 @@ raidSchema.methods.apiRepr = function() {
   const healers = [];
   const dps = [];
 
-  if(this.paladin.length !== 0) {
-    this.paladin.forEach(function(user) {
+  if(this.paladins.length !== 0) {
+    this.paladins.forEach(function(user) {
       // console.log('user:', user);
       return tanks.push({
         id: user.id,
@@ -56,8 +56,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.warrior.length !== 0) {
-    this.warrior.forEach(function(user) {
+  if(this.warriors.length !== 0) {
+    this.warriors.forEach(function(user) {
       return tanks.push({
         id: user._id,
         playerName: user.playerName,
@@ -65,8 +65,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.darkKnight.length !== 0) {
-    this.darkKnight.forEach(function(user) {
+  if(this.darkKnights.length !== 0) {
+    this.darkKnights.forEach(function(user) {
       return tanks.push({
         id: user._id,
         playerName: user.playerName,
@@ -74,8 +74,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.whiteMage.length !== 0) {
-    this.whiteMage.forEach(function(user) {
+  if(this.whiteMages.length !== 0) {
+    this.whiteMages.forEach(function(user) {
       return healers.push({
         id: user.id,
         playerName: user.playerName,
@@ -83,8 +83,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.scholar.length !== 0) {
-    this.scholar.forEach(function(user) {
+  if(this.scholars.length !== 0) {
+    this.scholars.forEach(function(user) {
       return healers.push({
         id: user.id,
         playerName: user.playerName,
@@ -92,8 +92,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.astrologian.length !== 0){
-    this.astrologian.forEach(function(user) {
+  if(this.astrologians.length !== 0){
+    this.astrologians.forEach(function(user) {
       return healers.push({
         id: user.id,
         playerName: user.playerName,
@@ -101,8 +101,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.dragoon.length !== 0){
-    this.dragoon.forEach(function(user) {
+  if(this.dragoons.length !== 0){
+    this.dragoons.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -110,8 +110,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.monk.length !== 0) {
-    this.monk.forEach(function(user) {
+  if(this.monks.length !== 0) {
+    this.monks.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -119,8 +119,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.ninja.length !== 0) {
-    this.ninja.forEach(function(user) {
+  if(this.ninjas.length !== 0) {
+    this.ninjas.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -128,8 +128,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.samurai.length !== 0) {
-    this.samurai.forEach(function(user) {
+  if(this.samurais.length !== 0) {
+    this.samurais.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -137,8 +137,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.redMage.length !== 0) {
-    this.redMage.forEach(function(user) {
+  if(this.redMages.length !== 0) {
+    this.redMages.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -146,8 +146,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.summoner.length !== 0) {
-    this.summoner.forEach(function(user) {
+  if(this.summoners.length !== 0) {
+    this.summoners.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -155,8 +155,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.blackMage.length !== 0) {
-    this.blackMage.forEach(function(user) {
+  if(this.blackMages.length !== 0) {
+    this.blackMages.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -164,8 +164,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.bard.length !== 0) {
-    this.bard.forEach(function(user) {
+  if(this.bards.length !== 0) {
+    this.bards.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,
@@ -173,8 +173,8 @@ raidSchema.methods.apiRepr = function() {
       });
     });
   }
-  if(this.machinist.length !== 0) {
-    this.machinist.forEach(function(user) {
+  if(this.machinists.length !== 0) {
+    this.machinists.forEach(function(user) {
       return dps.push({
         id: user.id,
         playerName: user.playerName,

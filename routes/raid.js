@@ -21,7 +21,7 @@ router.put('/:id', (req,res) => {
 
   Raid
    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-   .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+   .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
    .exec()
    .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
 
   Raid
     .find()
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
     .exec()
     .then(arrayOfTeams => {
       res.json(arrayOfTeams.map(
@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Raid
     .findById(req.params.id)
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
     .exec()
     .then(team => {
       res.json(team.apiRepr());
