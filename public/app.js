@@ -158,6 +158,10 @@ function render(state) {
                             <h5>${applicant.playerName.firstName} ${applicant.playerName.lastName}</h5>
                             <h6>Classes: <small>!!!!!!!</small></h6>
                             <p>Tilde drinking vinegar pok pok, swag raw denim pork belly crucifix raclette air plant authentic kinfolk wolf helvetica synth thundercats. Neutra copper mug 8-bit gochujang. Af venmo vexillologist fashion axe, narwhal schlitz artisan portland.</p>
+                            <ul class="team-member-controls nav-list">
+                              <li><a class="button-good js-team-accept" href="#">Accept</a></li>
+                              <li><a class="button-bad js-team-reject" href="#">Reject</a></li>
+                            </ul>
                           </div>
                         </div>
                       </div>`;
@@ -202,6 +206,14 @@ function eventHandlers() {
     setActivePage(appState,'account-applicants');
     render(appState);
     eventHandlers();
+  });
+  $('.content-root .js-team-accept').on('click', e => {
+    e.preventDefault();
+    console.log('Accept works!');
+  });
+  $('.content-root .js-team-reject').on('click', e => {
+    e.preventDefault();
+    console.log('Reject works!');
   });
 }
 // IN WHICH WE LOAD

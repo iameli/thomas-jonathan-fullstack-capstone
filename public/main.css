@@ -68,12 +68,21 @@ header {
 .column-right {
   float: right;
 }
-.button {
+.button, .button-good {
   padding: 0.75em;
   border: 1px solid #318689;
   border-radius: 3px;
   box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
   background-color: #318689;
+  color: #f2f2f2;
+  letter-spacing: .1em;
+}
+.button-bad {
+  padding: 0.75em;
+  border: 1px solid #6f4472;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  background-color: #6f4472;
   color: #f2f2f2;
   letter-spacing: .1em;
 }
@@ -185,4 +194,7 @@ header {
   max-width: 100%;
   box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
   border-radius: 50%;
+}
+.team-member-controls {
+  padding-top: 1em;
 }
