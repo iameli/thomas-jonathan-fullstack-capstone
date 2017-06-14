@@ -150,7 +150,7 @@ function render(state) {
     let applicantsPosts = '';
     applicants.forEach(applicant => {
       applicantsPosts += `<div class="row">
-                        <div class="team-member">
+                        <div class="team-member" data-id=${applicant._id}>
                           <div class="col-3 column-left">
                             <img class="team-member-thumb" src="http://placehold.it/200/200" alt="Team member image">
                           </div>
@@ -213,7 +213,8 @@ function eventHandlers() {
   });
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
-    console.log('Reject works!');
+    const element = e.currentTarget.closest('[data-id]').dataset.id;
+    console.log(element);
   });
 }
 // IN WHICH WE LOAD
