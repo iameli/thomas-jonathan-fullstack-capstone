@@ -20,13 +20,15 @@ function loadData(data) {
 }
 // IN WHICH WE RENDER
 function render(state) {
-  const teamPosts = state.raidTeams.map(team => {
+  let teamPosts = '';
+  state.raidTeams.forEach(team => {
+    teamPosts +=
     `<div class="team-post col-8">
       <h3>${team.name}
         <small>${team.time}</small>
       </h3>
       <img class="team-thumb" src="http://placehold.it/850x350" alt="Raid team thumbnail image"/>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Etsy aesthetic williamsburg, cray skateboard activated charcoal vaporware meggings mumblecore gluten-free messenger bag. Cloud bread art party gastropub, coloring book tumeric godard letterpress flexitarian echo park polaroid tumblr. Four loko banjo wayfarers tumeric subway tile skateboard, four dollar toast meh messenger bag pour-over occupy marfa. Wayfarers gentrify hell of, asymmetrical post-ironic celiac poke master cleanse fixie distillery affogato hot chicken disrupt. Health goth YOLO seitan wayfarers. Ramps ugh fam, beard iPhone YOLO kitsch scenester jean shorts swag echo park kale chips locavore pour-over. Shaman activated charcoal af banjo pabst tofu.</p>
       <div class="post-callout">
         <ul class="col-3 callout-left">
           <li>Raid Leader: ${team.leader.username}</li>
@@ -38,11 +40,24 @@ function render(state) {
       </div>
     </div>`;
   });
+  $('.content-root').html(teamPosts);
 }
 // IN WHICH WE HANDLE THE EVENTS
 
-// IN WHICH WE load
+// IN WHICH WE LOAD
+// function initialLoad() {
+//   return Promise.resolve(fetchTeams(loadData))
+//     .then(response => {
+//       console.log(response);
+//       render(appState);
+//     });
+// }
+function initialLoad() {
+  return Promise.resolve(fetchTeams(loadData)).then(() => render(appState));
+}
 $(function() {
-  fetchTeams(loadData);
-  render(appState);
+  // fetchTeams(loadData);
+  // render(appState);
+
+  initialLoad();
 });

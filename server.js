@@ -9,6 +9,7 @@ const {PORT, DATABASE_URL} = require('./config');
 const loginRouter = require('./routes/login');
 const raidRouter = require('./routes/raid');
 const userRouter = require('./routes/user');
+const path = require('path');
 
 mongoose.Promise = global.Promise;
 
@@ -17,8 +18,6 @@ const app = express();
 
 app.use(morgan('common'));
 
-app.use(express.static('public'));
-
 //set routers
 // app.use('/login/', loginRouter);
 // app.use('/raid-management/', raidRouter);
@@ -26,7 +25,11 @@ app.use(express.static('public'));
 app.use('/raid', raidRouter);
 app.use('/user', userRouter);
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/views/home.html'));
+});
 
+app.use(express.static('public'));
 
 // app.listen(process.env.PORT || 8080);
 
