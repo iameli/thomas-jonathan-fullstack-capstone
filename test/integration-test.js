@@ -187,7 +187,6 @@ describe('MVP', function() {
       return Raid.findOne()
         .exec()
         .then(raid => {
-          console.log('hello', raid);
           return chai.request(app)
             .put(`/raid/${raid.id}/${raid.applicants[0]}`);
         })
