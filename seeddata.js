@@ -1,6 +1,7 @@
 'use strict';
 
-const { User, Raid } = require('./model/models');
+const { User } = require('./models/user-model');
+const { Raid } = require('./models/raid-model');
 const mongoose = require('mongoose');
 const {DATABASE_URL} = require('./config');
 const faker = require('faker');

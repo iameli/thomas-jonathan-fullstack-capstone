@@ -11,7 +11,7 @@ mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
 router.put('/:id', (req,res) => {
-  const updated = {};
+  console.log(req.body);
   const updateableData = ['applicants', 'name', 'time', 'leader'].concat(Object.keys(req.body.jobs));
   updateableData.forEach(field => {
     if ( field in req.body) {
@@ -29,26 +29,28 @@ router.put('/:id', (req,res) => {
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
-router.post('/:teamId/:fieldName/:applicantId', (req, res) => {
+router.post('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
   Raid
     .findByIdAndUpdate(req.params.teamId,
-      { $push: { [req.params.fieldName]: req.params.applicantId } },
+      { $push: { [req.params.fieldName]: req.params.playerId } },
       {new: true})
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
     .then(response => res.status(200).json(response));
 });
 
-router.delete('/:teamId/:fieldName/:applicantId', (req, res) => {
+router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
   Raid
     .findByIdAndUpdate(req.params.teamId,
-      { $pull: { [req.params.fieldName]: req.params.applicantId } },
+      { $pull: { [req.params.fieldName]: req.params.playerId } },
       {new: true})
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
-    .then(response => res.status(200).json(response));
+    .then(updatedTeam => res.status(200).json(updatedTeam));
 });
 
 // router.put('/apply/:id', (req,res) => {

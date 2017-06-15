@@ -13,16 +13,28 @@ function fetchTeams() {
     url: '/raid',
   });
 }
-
-function updateTeam(teamId, body) {
+function fetchTeam(teamId) {
   return $.ajax({
-    contentType: 'application/json',
-    method: 'PUT',
-    url: `/raid/${teamId}`,
-    data: JSON.stringify(body),
-    dataType: 'json'
+    method: 'GET',
+    url: `/raid/${teamId}`
   });
 }
+function rejectApplicant(teamId, applicantId) {
+  return $.ajax({
+    method: 'DELETE',
+    url: `/raid/${teamId}/applicants/${applicantId}`
+  });
+}
+// function updateTeam(teamId, body) {
+//   return $.ajax({
+//     contentType: 'application/json',
+//     method: 'PUT',
+//     url: `/raid/${teamId}`,
+//     data: JSON.stringify(body),
+//     dataType: 'json'
+//   });
+// }
+
 // IN WHICH WE PERFORM FUNCTIONS RELATED TO AJAX REQUESTS
 
 // splice out an applicant from array of applicants
@@ -264,15 +276,22 @@ function eventHandlers() {
   });
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
-    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
+    const myApplicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const myTeamId = appState.myTeam.id;
-    const requestBody = {
-      applicants: spliceApplicant(appState, applicantId)
-    };
-    return updateTeam(myTeamId,requestBody).then(res => {
-      setMyTeam(appState, res);
-      render(appState);
-      eventHandlers();
+    // const requestBody = {
+    //   applicants: spliceApplicant(appState, applicantId)
+    // };
+    // return updateTeam(myTeamId,requestBody).then(res => {
+    //   setMyTeam(appState, res);
+    //   render(appState);
+    //   eventHandlers();
+    // });
+    return rejectApplicant(myTeamId, myApplicantId).then(res => {
+      fetchTeam(myTeamId).then(res => {
+        setMyTeam(appState, res);
+        render(appState);
+        eventHandlers();
+      });
     });
   });
   $('.content-root .role-select-form').on('submit', e => {
@@ -298,7 +317,7 @@ function initialLoad() {
     updateState(appState, res);
     setActivePage(appState,'home');
     //stubbed for test data
-    setMyTeam(appState, appState.raidTeams[1]);
+    setMyTeam(appState, appState.raidTeams[0]);
     render(appState);
   });
 }
