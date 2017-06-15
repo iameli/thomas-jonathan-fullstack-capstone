@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
@@ -29,6 +30,18 @@ userSchema.methods.apiRepr = function() {
     playerClass: this.playerClass,
     team: this.team
   };
+};
+
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt
+    .compare(password, this.password)
+    .then(isValid => isValid);
+};
+
+userSchema.statics.hashPassword = function(password) {
+  return bcrypt
+    .hash(password, 10)
+    .then(hash => hash);
 };
 
 const User = mongoose.model('User', userSchema);

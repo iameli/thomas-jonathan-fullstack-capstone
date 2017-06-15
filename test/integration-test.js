@@ -107,6 +107,7 @@ describe('MVP', function() {
     });
   });
 
+  //Tests for user router
   describe('User endpoint', function() {
 
     it('should return with an array of users', function() {
@@ -143,8 +144,75 @@ describe('MVP', function() {
          user.id.should.be.equal(res.body[0].id);
        });
     });
+
+    it.only('should update a user\'s\ team when accepted', function() {
+      let testUser;
+      let testRaid;
+      return User
+       .findOne()
+       .exec()
+       .then(user => {
+         testUser = user;
+         return Raid.findOne()
+         .exec()
+         .then(raid => {
+           testRaid = raid;
+           return chai.request(app)
+             .put(`/user/${raid._id}/${testUser._id}`)
+             .then(res => {
+               res.should.have.status(201);
+               res.should.be.json;
+               res.body.should.be.a('object');
+               res.body.team.should.equal(raid._id.toString());
+             });
+         });
+       });
+    });
+
+    it('should create a user', function() {
+      const newUser = {
+        username:'true14',
+        password: 'test-password' ,
+        email: faker.internet.email(),
+        discord: faker.internet.userName(),
+        playerName: {
+          firstName: 'Vynith',
+          lastName: 'Utali'
+        },
+        playerClass: [
+          {
+            className: 'Paladin',
+            level: 60
+          },
+          {
+            className:'Summoner',
+            level: 60
+          },
+          {
+            className: 'Warrior',
+            level: 60
+          },
+          {
+            className: 'Dark Knight',
+            level: 60
+          }
+        ]
+      };
+
+      return chai.request(app)
+        .post('/user')
+        .send(newUser)
+        .then(res => {
+          console.log(res.body);
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+
+        });
+    });
   });
 
+  //Tests for raid router
   describe('Raid endpoint', function() {
 
     it('should return with an array of teams', function() {

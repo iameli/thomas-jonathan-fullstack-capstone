@@ -6,10 +6,34 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const {User} = require('../models/user-model');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const {BasicStrategy} = require('passport-http');
 
 mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
+
+const strategy = new BasicStrategy(function(username, password, callback) {
+  let user;
+  User
+    .findOne({username: username})
+    .exec()
+    .then(_user => {
+      user = _user;
+      if (!user) {
+        return callback(null, false, {message: 'Incorrect username'});
+      }
+      return user.validatePassword(password);
+    })
+    .then(isValid => {
+      if (!isValid) {
+        return callback(null, false, {message: 'Incorrect password'});
+      }
+      else {
+        return callback(null, user);
+      }
+    });
+});
 
 
 router.get('/', (req, res) => {
@@ -41,49 +65,58 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// router.post('/:id', (req, res) => {
-//   const requiredFields = ['username', 'email', 'password', 'playerName'];
-//   const missingIndex = requiredFields.findIndex(field => !req.body[field]);
-//   if(missingIndex !== -1) {
-//     return res.status(400).json({
-//       message: `Missing field: ${requiredFields[missingIndex]}`
-//     });
-//   }
-//
-//   let {username, password, playerName, email, discord, playerClass} = req.body;
-//
-//   username = username.trim();
-//   password = password.trim();
-//
-//
-//   return User
-//     .find({username})
-//     .count
-//     .exec()
-//     .then(count => {
-//       if (count > 0) {
-//         return res.status(422).json({message: 'username already taken'});
-//       }
-//       return User.hashPassword(password);
-//     })
-//     .then(hash => {
-//       return User
-//         .create({
-//           username,
-//           password: hash,
-//           email,
-//           discord,
-//           playerName,
-//           playerClass
-//         });
-//     })
-//     .then(user => {
-//       return res.status(201).json(user.apiRepr());
-//     })
-//     .catch(err => {
-//       res.send(err);
-//     });
-// });
+router.put('/:id/:userId', (req,res) => {
+  User
+    .findByIdAndUpdate(req.params.userId,
+      {$push: {team: `${req.params.id}`}},
+      {new: true})
+    .exec()
+    .then(user => res.status(201).json(user.apiRepr()));
+});
+
+router.post('/', (req, res) => {
+  const requiredFields = ['username', 'email', 'password', 'playerName'];
+  const missingIndex = requiredFields.findIndex(field => !req.body[field]);
+  if(missingIndex !== -1) {
+    return res.status(400).json({
+      message: `Missing field: ${requiredFields[missingIndex]}`
+    });
+  }
+
+  let {username, password, playerName, email, discord, playerClass} = req.body;
+
+  username = username.trim();
+  password = password.trim();
+
+
+  return User
+    .find({username})
+    .count()
+    .exec()
+    .then(count => {
+      if (count > 0) {
+        return res.status(422).json({message: 'username already taken'});
+      }
+      return User.hashPassword(password);
+    })
+    .then(hash => {
+      return User
+        .create({
+          username,
+          password: hash,
+          email,
+          discord,
+          playerName,
+          playerClass
+        });
+    })
+    .then(user => {
+      return res.status(201).json(user.apiRepr());
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
 
 
 module.exports = router;
