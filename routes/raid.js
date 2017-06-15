@@ -13,12 +13,10 @@ router.use(bodyParser.json());
 
 router.put('/:id/:userId', (req, res) => {
   Raid
-   .findByIdAndUpdate(req.params.id, {$push: {applicants: req.params.userId}}, {new: true})
+   .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})
    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
    .exec()
-   .then(raid => {
-     res.status(201).json(raid.apiRepr());
-   })
+   .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
