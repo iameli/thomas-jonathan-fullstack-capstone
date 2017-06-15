@@ -142,7 +142,7 @@ describe('MVP', function() {
        });
     });
 
-    it.only('should update a user\'s\ team when accepted', function() {
+    it('should update a user\'s\ team when accepted', function() {
       let testUser;
       let testRaid;
       return User
@@ -200,7 +200,6 @@ describe('MVP', function() {
         .post('/user')
         .send(newUser)
         .then(res => {
-          console.log(res.body);
           res.should.have.status(201);
           res.should.be.json;
           res.body.should.be.a('object');
