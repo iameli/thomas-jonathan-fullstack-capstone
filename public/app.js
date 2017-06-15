@@ -37,7 +37,6 @@ function spliceApplicant(state, applicantId) {
   myApplicants.splice(indexToSplice, 1);
   return myApplicants;
 }
-
 // IN WHICH WE MODIFY THE STATE
 function updateState(state, data) {
   state.raidTeams = data;
@@ -201,14 +200,14 @@ function render(state) {
                                 <select name="select-class" required="true">
                                   ${stringOfClassOptions}
                                 </select>
-                                <input id="tank-btn-${applicant._id}" type="radio" name="team-role" value="Tank" />
+                                <input id="tank-btn-${applicant._id}" type="radio" name="team-role" value="Tank" required />
                                 <label for="tank-btn">Tank</label> |
                                 <input id="healer-btn-${applicant._id}" type="radio" name="team-role" value="Healer" />
                                 <label for="healer-btn">Healer</label> |
                                 <input id="dps-btn-${applicant._id}" type="radio" name="team-role" value="DPS" />
                                 <label for="dps-btn">DPS</label> |
                                 <input type="submit" value="Submit">
-                                <button type="button" name="cancel-btn">Cancel</button>
+                                <button class="cancel-btn"type="button" name="cancel-btn">Cancel</button>
                               </fieldset>
                             </form>
                           </div>
@@ -261,21 +260,36 @@ function eventHandlers() {
   });
   $('.content-root .js-team-accept').on('click', e => {
     e.preventDefault();
-    const element = $(e.currentTarget).closest('div').next().find('form');
-    element.removeAttr('hidden');
+    $(e.currentTarget).closest('div').next().find('form').show();
   });
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
-    const dataId = e.currentTarget.closest('[data-id]').dataset.id;
+    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const myTeamId = appState.myTeam.id;
     const requestBody = {
-      applicants: spliceApplicant(appState, dataId)
+      applicants: spliceApplicant(appState, applicantId)
     };
     return updateTeam(myTeamId,requestBody).then(res => {
       setMyTeam(appState, res);
       render(appState);
       eventHandlers();
     });
+  });
+  $('.content-root .role-select-form').on('submit', e => {
+    e.preventDefault();
+    const criteria = $(e.currentTarget).serializeArray();
+    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
+    const newClassName = criteria[0].value;
+    const myTeamId = appState.myTeam.id;
+    const requestBody = {
+      applicants: spliceApplicant(appState, applicantId),
+      [newClassName]: ''
+    };
+
+
+  });
+  $('.content-root .cancel-btn').on('click', e => {
+    $(e.currentTarget).closest('form').hide();
   });
 }
 // IN WHICH WE LOAD
