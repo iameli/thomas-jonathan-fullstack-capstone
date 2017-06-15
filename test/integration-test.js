@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 const faker = require('faker');
 const {DATABASE_URL, TEST_DATABASE_URL} = require('../config');
-const {Raid, User} = require('../models');
+const {Raid, User} = require('../models/raid-model', '../models/user-model');
 const {closeServer, runServer, app} = require('../server');
 
 let testRaid;

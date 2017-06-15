@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const {Raid} = require('../models');
+const {Raid} = require('../models/raid-model');
 
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
