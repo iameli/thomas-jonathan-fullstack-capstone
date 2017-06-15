@@ -13,6 +13,7 @@ mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
 
+//Basic authentication strategy
 const strategy = new BasicStrategy(function(username, password, callback) {
   let user;
   User
@@ -35,7 +36,7 @@ const strategy = new BasicStrategy(function(username, password, callback) {
     });
 });
 
-
+//Get all users from database
 router.get('/', (req, res) => {
   return User
     .find()
@@ -52,6 +53,7 @@ router.get('/', (req, res) => {
     });
 });
 
+//Allow queries for a single user
 router.get('/:id', (req, res) => {
   return User
     .findById(req.params.id)
@@ -65,6 +67,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Update what team the user is on for when they are accepted on a team
 router.put('/:id/:userId', (req,res) => {
   User
     .findByIdAndUpdate(req.params.userId,
@@ -74,6 +77,7 @@ router.put('/:id/:userId', (req,res) => {
     .then(user => res.status(201).json(user.apiRepr()));
 });
 
+//Allow the creation of a new user
 router.post('/', (req, res) => {
   const requiredFields = ['username', 'email', 'password', 'playerName'];
   const missingIndex = requiredFields.findIndex(field => !req.body[field]);
@@ -87,7 +91,6 @@ router.post('/', (req, res) => {
 
   username = username.trim();
   password = password.trim();
-
 
   return User
     .find({username})
