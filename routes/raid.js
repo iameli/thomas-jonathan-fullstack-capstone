@@ -12,12 +12,21 @@ router.use(bodyParser.json());
 
 router.put('/:id', (req,res) => {
   const updated = {};
-  const updateableData = Object.keys(req.body);
+  console.log('request',req.body);
+  const updateableData = ['applicants', 'name', 'time', 'leader'];
+  const updateableJobData = Object.keys(req.body.jobs);
+  console.log('Update', updateableJobData);
   updateableData.forEach(field => {
     if ( field in req.body) {
       updated[field] = req.body[field];
     }
   });
+  updateableJobData.forEach(jobField => {
+    if ( jobField in req.body.jobs) {
+      updated[`jobs.${jobField}`] = req.body.jobs[jobField];
+    }
+  });
+  console.log('Updated Fields', updated);
 
   Raid
    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
