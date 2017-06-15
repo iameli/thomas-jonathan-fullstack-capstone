@@ -3,7 +3,8 @@
 const appState = {
   raidTeams: [],
   activePage: '',
-  myTeam: {}
+  myTeam: {},
+  myUserId: ''
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
@@ -304,8 +305,8 @@ function eventHandlers() {
   $('.content-root .role-select-form').on('submit', e => {
     e.preventDefault();
     const criteria = $(e.currentTarget).serializeArray();
-    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const newClassName = criteria[0].value;
+    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const myTeamId = appState.myTeam.id;
     // const requestBody = {
     //   // applicants: spliceApplicant(appState, applicantId),

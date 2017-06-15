@@ -106,8 +106,31 @@ const usersToCreate = [
       lastName: faker.name.firstName()
     },
     playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
   }
 ];
+
 function tearDownDb() {
   return new Promise((resolve, reject) => {
     console.warn('Deleting database');
