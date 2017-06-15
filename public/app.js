@@ -19,7 +19,13 @@ function fetchTeam(teamId) {
     url: `/raid/${teamId}`
   });
 }
-function rejectApplicant(teamId, applicantId) {
+function acceptApplicant(teamId, applicantId, className) {
+  return $.ajax({
+    method: 'POST',
+    url: `/raid/${teamId}/jobs.${className}s/${applicantId}`
+  });
+}
+function removeApplicant(teamId, applicantId) {
   return $.ajax({
     method: 'DELETE',
     url: `/raid/${teamId}/applicants/${applicantId}`
@@ -278,6 +284,8 @@ function eventHandlers() {
     e.preventDefault();
     const myApplicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const myTeamId = appState.myTeam.id;
+    // Below can be used for PUT endpoint
+
     // const requestBody = {
     //   applicants: spliceApplicant(appState, applicantId)
     // };
@@ -286,12 +294,11 @@ function eventHandlers() {
     //   render(appState);
     //   eventHandlers();
     // });
-    return rejectApplicant(myTeamId, myApplicantId).then(res => {
-      fetchTeam(myTeamId).then(res => {
-        setMyTeam(appState, res);
-        render(appState);
-        eventHandlers();
-      });
+
+    return removeApplicant(myTeamId, myApplicantId).then(res => {
+      setMyTeam(appState, res);
+      render(appState);
+      eventHandlers();
     });
   });
   $('.content-root .role-select-form').on('submit', e => {
@@ -300,11 +307,17 @@ function eventHandlers() {
     const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
     const newClassName = criteria[0].value;
     const myTeamId = appState.myTeam.id;
-    const requestBody = {
-      // applicants: spliceApplicant(appState, applicantId),
-      [newClassName]: ''
-    };
-    console.log('appID'+applicantId, newClassName, 'teamId'+myTeamId);
+    // const requestBody = {
+    //   // applicants: spliceApplicant(appState, applicantId),
+    //   [newClassName]: ''
+    // };
+    return acceptApplicant(myTeamId, applicantId, newClassName).then(res => {
+      return removeApplicant(myTeamId, applicantId).then(res => {
+        setMyTeam(appState, res);
+        render(appState);
+        eventHandlers();
+      });
+    });
 
   });
   $('.content-root .cancel-btn').on('click', e => {

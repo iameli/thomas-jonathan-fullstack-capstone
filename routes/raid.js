@@ -38,7 +38,7 @@ router.post('/:teamId/:fieldName/:playerId', (req, res) => {
       {new: true})
     .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
-    .then(response => res.status(200).json(response));
+    .then(response => res.status(200).json(response.apiRepr()));
 });
 
 router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
@@ -50,7 +50,7 @@ router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
       {new: true})
     .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
-    .then(updatedTeam => res.status(200).json(updatedTeam));
+    .then(updatedTeam => res.status(200).json(updatedTeam.apiRepr()));
 });
 
 // router.put('/apply/:id', (req,res) => {
