@@ -8,21 +8,23 @@ const raidSchema = mongoose.Schema({
   leader: {type: Schema.Types.ObjectId, ref: 'User'},
   time: {type: Date, default: Date.now},
   applicants: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  paladins: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  warriors: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  darkKnights: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  whiteMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  scholars: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  astrologians: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  ninjas: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  dragoons: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  samurais: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  monks: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  redMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  summoners: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  blackMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  bards: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  machinists: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  jobs: {
+    paladins: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    warriors: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    darkKnights: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    whiteMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    scholars: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    astrologians: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    ninjas: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    dragoons: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    samurais: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    monks: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    redMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    summoners: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    blackMages: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    bards: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    machinists: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  }
 });
 
 const userSchema = mongoose.Schema({
@@ -46,142 +48,180 @@ raidSchema.methods.apiRepr = function() {
   const healers = [];
   const dps = [];
 
-  if(this.paladins.length !== 0) {
-    this.paladins.forEach(function(user) {
-      // console.log('user:', user);
-      return tanks.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Paladin'
+  const jobsArray = Object.keys(this.jobs.toObject());
+  console.log(jobsArray);
+  console.log(this.jobs.jobsArray[0]);
+  jobsArray.forEach(job => {
+    console.log('this is the job', job);
+    if(this.jobs.job && this.jobs.job.length !== 0) {
+      console.log('this is the tank state', tanks);
+      this.jobs.job.forEach(player => {
+        switch(job.toString()) {
+        case 'warriors':
+        case 'paladins':
+        case 'darkKnights':
+          tanks.push({
+            id: player.id,
+            playerName: player.playerName,
+            class: job.toString()
+          });
+          break;
+        case 'scholars':
+        case 'whiteMages':
+        case 'astrologians':
+          healers.push({
+            id: player.id,
+            playerName: player.playerName,
+            class: job.toString()
+          });
+          break;
+        default:
+          dps.push({
+            id: player.id,
+            playerName: player.playerName,
+            class: job.toString()
+          });
+        }
       });
-    });
-  }
-  if(this.warriors.length !== 0) {
-    this.warriors.forEach(function(user) {
-      return tanks.push({
-        id: user._id,
-        playerName: user.playerName,
-        class: 'Warrior'
-      });
-    });
-  }
-  if(this.darkKnights.length !== 0) {
-    this.darkKnights.forEach(function(user) {
-      return tanks.push({
-        id: user._id,
-        playerName: user.playerName,
-        class: 'Dark Knight'
-      });
-    });
-  }
-  if(this.whiteMages.length !== 0) {
-    this.whiteMages.forEach(function(user) {
-      return healers.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'White Mage'
-      });
-    });
-  }
-  if(this.scholars.length !== 0) {
-    this.scholars.forEach(function(user) {
-      return healers.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Scholar'
-      });
-    });
-  }
-  if(this.astrologians.length !== 0){
-    this.astrologians.forEach(function(user) {
-      return healers.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'astrologian'
-      });
-    });
-  }
-  if(this.dragoons.length !== 0){
-    this.dragoons.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Dragoon'
-      });
-    });
-  }
-  if(this.monks.length !== 0) {
-    this.monks.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Monk'
-      });
-    });
-  }
-  if(this.ninjas.length !== 0) {
-    this.ninjas.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Ninja'
-      });
-    });
-  }
-  if(this.samurais.length !== 0) {
-    this.samurais.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Samurai'
-      });
-    });
-  }
-  if(this.redMages.length !== 0) {
-    this.redMages.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Red Mage'
-      });
-    });
-  }
-  if(this.summoners.length !== 0) {
-    this.summoners.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Summoner'
-      });
-    });
-  }
-  if(this.blackMages.length !== 0) {
-    this.blackMages.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Black Magic'
-      });
-    });
-  }
-  if(this.bards.length !== 0) {
-    this.bards.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Bard'
-      });
-    });
-  }
-  if(this.machinists.length !== 0) {
-    this.machinists.forEach(function(user) {
-      return dps.push({
-        id: user.id,
-        playerName: user.playerName,
-        class: 'Machinist'
-      });
-    });
-  }
+    }
+  });
+
+  // if(this.paladins.length !== 0) {
+  //   this.paladins.forEach(function(user) {
+  //     // console.log('user:', user);
+  //     return tanks.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Paladin'
+  //     });
+  //   });
+  // }
+  // if(this.warriors.length !== 0) {
+  //   this.warriors.forEach(function(user) {
+  //     return tanks.push({
+  //       id: user._id,
+  //       playerName: user.playerName,
+  //       class: 'Warrior'
+  //     });
+  //   });
+  // }
+  // if(this.darkKnights.length !== 0) {
+  //   this.darkKnights.forEach(function(user) {
+  //     return tanks.push({
+  //       id: user._id,
+  //       playerName: user.playerName,
+  //       class: 'Dark Knight'
+  //     });
+  //   });
+  // }
+  // if(this.whiteMages.length !== 0) {
+  //   this.whiteMages.forEach(function(user) {
+  //     return healers.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'White Mage'
+  //     });
+  //   });
+  // }
+  // if(this.scholars.length !== 0) {
+  //   this.scholars.forEach(function(user) {
+  //     return healers.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Scholar'
+  //     });
+  //   });
+  // }
+  // if(this.astrologians.length !== 0){
+  //   this.astrologians.forEach(function(user) {
+  //     return healers.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'astrologian'
+  //     });
+  //   });
+  // }
+  // if(this.dragoons.length !== 0){
+  //   this.dragoons.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Dragoon'
+  //     });
+  //   });
+  // }
+  // if(this.monks.length !== 0) {
+  //   this.monks.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Monk'
+  //     });
+  //   });
+  // }
+  // if(this.ninjas.length !== 0) {
+  //   this.ninjas.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Ninja'
+  //     });
+  //   });
+  // }
+  // if(this.samurais.length !== 0) {
+  //   this.samurais.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Samurai'
+  //     });
+  //   });
+  // }
+  // if(this.redMages.length !== 0) {
+  //   this.redMages.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Red Mage'
+  //     });
+  //   });
+  // }
+  // if(this.summoners.length !== 0) {
+  //   this.summoners.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Summoner'
+  //     });
+  //   });
+  // }
+  // if(this.blackMages.length !== 0) {
+  //   this.blackMages.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Black Magic'
+  //     });
+  //   });
+  // }
+  // if(this.bards.length !== 0) {
+  //   this.bards.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Bard'
+  //     });
+  //   });
+  // }
+  // if(this.machinists.length !== 0) {
+  //   this.machinists.forEach(function(user) {
+  //     return dps.push({
+  //       id: user.id,
+  //       playerName: user.playerName,
+  //       class: 'Machinist'
+  //     });
+  //   });
+  // }
 
   return {
     id: this._id,

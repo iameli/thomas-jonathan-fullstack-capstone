@@ -118,19 +118,20 @@ function tearDownDb() {
 
 function seedRaidData(data) {
   console.log('seeding raid data');
-  console.log(data);
   let testRaid = {
     name: faker.company.companyName(),
     leader: data[0]._id,
     applicants: [
       data[3].id, data[8]._id
     ],
-    darkKnights: [data[4]._id],
-    warriors: [data[5]._id],
-    whiteMages: [data[7]._id],
-    ninjas: [data[6]._id],
-    dragoons: [data[1]._id,data[2]._id],
-    monks: [data[0]._id]
+    jobs: {
+      darkKnights: [data[4]._id],
+      warriors: [data[5]._id],
+      whiteMages: [data[7]._id],
+      ninjas: [data[6]._id],
+      dragoons: [data[1]._id,data[2]._id],
+      monks: [data[0]._id]
+    }
   };
   return Raid.create(testRaid);
 }

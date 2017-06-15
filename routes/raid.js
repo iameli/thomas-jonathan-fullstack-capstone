@@ -21,7 +21,7 @@ router.put('/:id', (req,res) => {
 
   Raid
    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-   .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
+   .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
    .exec()
    .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
@@ -33,13 +33,11 @@ router.put('/:id', (req,res) => {
 // });
 
 router.get('/', (req, res) => {
-
   Raid
     .find()
-    .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
     .then(arrayOfTeams => {
-      console.log(arrayOfTeams);
       res.json(arrayOfTeams.map(
           (team) => team.apiRepr()
         )
@@ -54,7 +52,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Raid
     .findById(req.params.id)
-    .populate(['leader', 'applicants', 'paladins', 'warriors', 'darkKnights', 'whiteMages', 'scholars', 'astrologians', 'ninjas', 'dragoons', 'samurais', 'monks', 'redMages', 'summoners', 'blackMages', 'bards', 'machinists'])
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
     .then(team => {
       res.json(team.apiRepr());

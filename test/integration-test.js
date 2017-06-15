@@ -59,12 +59,14 @@ function seedRaidData(data) {
     applicants: [
       data[1].id, data[1].id
     ],
-    darkKnights: [data[3].id],
-    warriors: [data[4].id],
-    whiteMages: [data[5].id],
-    ninjas: [data[6].id],
-    dragoons: [data[7].id,data[8].id],
-    monks: [data[9].id]
+    jobs: {
+      darkKnights: [data[3].id],
+      warriors: [data[4].id],
+      whiteMages: [data[5].id],
+      ninjas: [data[6].id],
+      dragoons: [data[7].id,data[8].id],
+      monks: [data[9].id]
+    }
   };
 
   return Raid.create(testRaid);
@@ -144,12 +146,12 @@ describe('MVP', function() {
 
   describe('Raid endpoint', function() {
 
-    it('should return with an array of teams', function() {
+    it.only('should return with an array of teams', function() {
       let res;
       return chai.request(app)
         .get('/raid')
         .then(function(_result) {
-          // console.log(_result.body[0].members);
+          console.log(_result.body[0].members);
           res = _result;
           res.should.have.status(200);
           res.should.be.json;
