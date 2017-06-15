@@ -1,0 +1,201 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #f2f2f2;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+header {
+  height: 6em;
+  background-color: #13093d;
+  color: #f2f2f2;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  display: block;
+}
+
+/*footer {
+  height: 2em;
+  background-color: #13093d;
+  color: #f2f2f2;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}*/
+
+.container {
+  margin: 6em auto -2em auto;
+  padding: 0 3em;
+  height: 100%;
+}
+.row {
+  width: 100%;
+  overflow: hidden;
+}
+.col-12 {
+  width: 100%;
+  padding: 1em;
+}
+.col-9 {
+  width: 75%;
+  padding: 1em;
+}
+.col-8 {
+  width: 66.67%;
+  padding: 1em;
+}
+.col-6 {
+  width: 50%;
+  padding: 1em;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-3 {
+ width: 25%;
+ padding: 1em;
+}
+.column-left {
+  float: left;
+}
+.column-right {
+  float: right;
+}
+.button, .button-good {
+  padding: 0.75em;
+  border: 1px solid #318689;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  background-color: #318689;
+  color: #f2f2f2;
+  letter-spacing: .1em;
+}
+.button-bad {
+  padding: 0.75em;
+  border: 1px solid #6f4472;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  background-color: #6f4472;
+  color: #f2f2f2;
+  letter-spacing: .1em;
+}
+/*Header Styles*/
+
+.head h2 {
+  float: left;
+  text-decoration: none;
+  color: #f2f2f2;
+  font-size: 3em;
+  letter-spacing: 0.2em;
+  padding-left: 0.5em;
+  margin-top: .3em;
+}
+.account-controls {
+  position: sticky;
+  display: inline-block;
+  float: right;
+  padding: 1em;
+  margin-right: 1em;
+  text-align: right;
+  word-spacing: 0.5em;
+}
+.account-controls li {
+  list-style-type: none;
+  display: inline;
+}
+.account-controls a {
+  color: #f2f2f2;
+  text-decoration: none;
+}
+
+/*Main Content Styles */
+
+.team-post {
+  color: #000000;
+  display: block;
+  padding-top: 1em;
+  margin: 0;
+}
+.team-post h3 {
+  font-size: 2em;
+}
+.team-thumb {
+  max-width: 100%;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+}
+.post-callout {
+  border:  1px solid #000000;
+  display: inline-block;
+  width: 100%;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+}
+.post-callout ul {
+  display: inline-block;
+}
+.callout-left {
+  float: left;
+  list-style-type: none;
+}
+.callout-right {
+  float: right;
+  list-style-type: none;
+  text-align: right;
+  padding-right: 2em;
+  margin-top: 2.4em;
+}
+.callout-right a {
+  text-decoration: none;
+}
+
+/*Home Page Filters Styling*/
+.filter-box {
+  position: relative;
+  float: right;
+}
+.sticky-top {
+  position: fixed;
+  top: 9em;
+}
+
+.nav-bar {
+  padding-top: 3em;
+  padding-bottom: .6em;
+}
+.nav-tab {
+  border-bottom: 2px solid #318689;
+  border-right: 2px solid #318689;
+  border-radius: 3px;
+  color: #000000;
+  padding: 1.5em;
+}
+.nav-list {
+  padding-left: 0;
+}
+.nav-list li {
+  list-style-type: none;
+  display: inline;
+}
+.nav-list a {
+  text-decoration: none;
+}
+
+.team-member-toggle {
+  color: #000000;
+  padding-right: 1em;
+}
+.team-member-thumb {
+  margin-top: 2em;
+  max-width: 100%;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  border-radius: 50%;
+}
+.team-member-controls {
+  padding-top: 1em;
+}
