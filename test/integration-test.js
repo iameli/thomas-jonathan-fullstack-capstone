@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 // this function deletes the entire database.
 // we'll call it in an `afterEach` block below
-// to ensure  ata from one test does not stick
+// to ensure data from one test does not stick
 // around for next one
 function tearDownDb() {
   return new Promise((resolve, reject) => {
@@ -27,11 +27,8 @@ function tearDownDb() {
   });
 }
 
-// used to put randomish documents in db
-// so we have data to work with and assert about.
-// we use the Faker library to automatically
-// generate placeholder values for author, title, content
-// and then we insert that data into mongo
+//Used to push random users and a random raid team
+//onto the test database.
 function seedUserData() {
   console.info('seeding user data');
   const seedData = [];
@@ -107,6 +104,7 @@ describe('MVP', function() {
     });
   });
 
+  //Tests for user router
   describe('User endpoint', function() {
 
     it('should return with an array of users', function() {
@@ -143,8 +141,74 @@ describe('MVP', function() {
          user.id.should.be.equal(res.body[0].id);
        });
     });
+
+    it('should update a user\'s\ team when accepted', function() {
+      let testUser;
+      let testRaid;
+      return User
+       .findOne()
+       .exec()
+       .then(user => {
+         testUser = user;
+         return Raid.findOne()
+         .exec()
+         .then(raid => {
+           testRaid = raid;
+           return chai.request(app)
+             .put(`/user/${raid._id}/${testUser._id}`)
+             .then(res => {
+               res.should.have.status(201);
+               res.should.be.json;
+               res.body.should.be.a('object');
+               res.body.team.should.equal(raid._id.toString());
+             });
+         });
+       });
+    });
+
+    it('should create a user', function() {
+      const newUser = {
+        username:'true14',
+        password: 'test-password' ,
+        email: faker.internet.email(),
+        discord: faker.internet.userName(),
+        playerName: {
+          firstName: 'Vynith',
+          lastName: 'Utali'
+        },
+        playerClass: [
+          {
+            className: 'Paladin',
+            level: 60
+          },
+          {
+            className:'Summoner',
+            level: 60
+          },
+          {
+            className: 'Warrior',
+            level: 60
+          },
+          {
+            className: 'Dark Knight',
+            level: 60
+          }
+        ]
+      };
+
+      return chai.request(app)
+        .post('/user')
+        .send(newUser)
+        .then(res => {
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a('object');
+
+        });
+    });
   });
 
+  //Tests for raid router
   describe('Raid endpoint', function() {
 
     it('should return with an array of teams', function() {
