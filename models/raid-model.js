@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 const formatClassString = string => {
   let tmpString = string.charAt(0).toUpperCase() + string.slice(1);
-
   return tmpString.slice(0,-1).split(/(?=[A-Z])/).join(' ');
 };
 
