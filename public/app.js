@@ -4,7 +4,7 @@ const appState = {
   raidTeams: [],
   activePage: '',
   myTeam: {},
-  myUserId: ''
+  myUserId: '5942e415d1a02538c54f933d'
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
@@ -18,6 +18,12 @@ function fetchTeam(teamId) {
   return $.ajax({
     method: 'GET',
     url: `/raid/${teamId}`
+  });
+}
+function applyToTeam(teamId, applicantId) {
+  return $.ajax({
+    method: 'PUT',
+    url: `/raid/${teamId}/${applicantId}`
   });
 }
 function acceptApplicant(teamId, applicantId, className) {
@@ -85,7 +91,7 @@ function render(state) {
     let teamPosts = `${filterBox}`;
     state.raidTeams.forEach(team => {
       teamPosts +=
-      `<div class="team-post col-8">
+      `<div class="team-post col-8" data-id=${team.id}>
         <h3>${team.name}
           <small>${team.time}</small>
         </h3>
@@ -97,7 +103,7 @@ function render(state) {
             <li>Open Roles: ....stuff</li>
           </ul>
           <ul class="callout-right col-3">
-            <li><a class="button" href="#" aria-label="Apply to join a raid team">Apply</a></li>
+            <li><a class="button js-team-apply" href="#" aria-label="Apply to join a raid team">Apply</a></li>
           </ul>
         </div>
       </div>`;
@@ -277,6 +283,22 @@ function eventHandlers() {
     render(appState);
     eventHandlers();
   });
+  $('.content-root .js-team-apply').on('click', e => {
+    e.preventDefault;
+    const newTeamId = e.currentTarget.closest('[data-id]').dataset.id;
+    const myId = appState.myUserId;
+    return applyToTeam(newTeamId, myId).then(res => {
+      // stubbed for DEMO-->user will show in applicants of MyTeam
+      setMyTeam(appState,res);
+      // Fetch teams to make AppState current
+      fetchTeams().then(res => {
+        updateState(appState, res);
+        render(appState);
+        eventHandlers();
+        alert('Good luck!');
+      });
+    });
+  });
   $('.content-root .js-team-accept').on('click', e => {
     e.preventDefault();
     $(e.currentTarget).closest('div').next().find('form').show();
@@ -327,17 +349,17 @@ function eventHandlers() {
 }
 // IN WHICH WE LOAD
 function initialLoad() {
-  return fetchTeams().then((res) => {
+  return fetchTeams().then(res => {
     updateState(appState, res);
     setActivePage(appState,'home');
     //stubbed for test data
     setMyTeam(appState, appState.raidTeams[0]);
     render(appState);
+    eventHandlers();
   });
 }
 $(function() {
   initialLoad();
-  eventHandlers();
 });
 
 
