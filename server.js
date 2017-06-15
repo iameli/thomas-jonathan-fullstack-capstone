@@ -4,7 +4,6 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-const { User, Raid } = require('./models');
 const {PORT, DATABASE_URL} = require('./config');
 const loginRouter = require('./routes/login');
 const raidRouter = require('./routes/raid');

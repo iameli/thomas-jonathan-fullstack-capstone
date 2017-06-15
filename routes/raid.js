@@ -5,23 +5,25 @@ const express = require('express');
 const router = express.Router();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const {Raid} = require('../models');
+const {Raid} = require('../models/raid-model');
 
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
 router.put('/:id', (req,res) => {
   const updated = {};
-  const updateableData = Object.keys(req.body);
+  const updateableData = ['applicants', 'name', 'time', 'leader'].concat(Object.keys(req.body.jobs));
   updateableData.forEach(field => {
     if ( field in req.body) {
       updated[field] = req.body[field];
+    }else if(field in req.body.jobs) {
+      updated[`jobs.${field}`] = req.body.jobs[field];
     }
   });
 
   Raid
    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-   .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+   .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
    .exec()
    .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
@@ -54,10 +56,9 @@ router.delete('/:teamId/:fieldName/:applicantId', (req, res) => {
 // });
 
 router.get('/', (req, res) => {
-
   Raid
     .find()
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
     .then(arrayOfTeams => {
       res.json(arrayOfTeams.map(
@@ -74,7 +75,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Raid
     .findById(req.params.id)
-    .populate(['leader', 'applicants', 'paladin', 'warrior', 'darkKnight', 'whiteMage', 'scholar', 'astrologian', 'ninja', 'dragoon', 'samurai', 'monk', 'redMage', 'summoner', 'blackMage', 'bard', 'machinist'])
+    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
     .exec()
     .then(team => {
       res.json(team.apiRepr());
