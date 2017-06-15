@@ -27,7 +27,6 @@ router.put('/:id', (req,res) => {
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
-
 // router.put('/apply/:id', (req,res) => {
 //
 // });

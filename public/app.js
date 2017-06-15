@@ -13,6 +13,31 @@ function fetchTeams() {
     url: '/raid',
   });
 }
+
+function updateTeam(teamId, body) {
+  return $.ajax({
+    contentType: 'application/json',
+    method: 'PUT',
+    url: `/raid/${teamId}`,
+    data: JSON.stringify(body),
+    dataType: 'json'
+  });
+}
+// IN WHICH WE PERFORM FUNCTIONS RELATED TO AJAX REQUESTS
+
+// splice out an applicant from array of applicants
+function spliceApplicant(state, applicantId) {
+  const myApplicants = state.myTeam.applicants;
+  let indexToSplice;
+  myApplicants.forEach(applicant => {
+    if (applicantId === applicant._id) {
+      indexToSplice = myApplicants.indexOf(applicant);
+    }
+  });
+  myApplicants.splice(indexToSplice, 1);
+  return myApplicants;
+}
+
 // IN WHICH WE MODIFY THE STATE
 function updateState(state, data) {
   state.raidTeams = data;
@@ -20,9 +45,8 @@ function updateState(state, data) {
 function setActivePage(state, pageName) {
   state.activePage = pageName;
 }
-function setMyTeam(state, myId) {
-  //stubbed for test data
-  state.myTeam = state.raidTeams[0];
+function setMyTeam(state, myNewTeam) {
+  state.myTeam = myNewTeam;
 }
 // IN WHICH WE RENDER
 function render(state) {
@@ -191,9 +215,12 @@ function eventHandlers() {
   });
   $('#home-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState,'home');
-    render(appState);
-    eventHandlers();
+    return fetchTeams().then(res => {
+      updateState(appState, res);
+      setActivePage(appState,'home');
+      render(appState);
+      eventHandlers();
+    });
   });
   $('#team-members-link').on('click', e => {
     e.preventDefault();
@@ -214,6 +241,15 @@ function eventHandlers() {
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
     const dataId = e.currentTarget.closest('[data-id]').dataset.id;
+    const myTeamId = appState.myTeam.id;
+    const requestBody = {
+      applicants: spliceApplicant(appState, dataId)
+    };
+    return updateTeam(myTeamId,requestBody).then(res => {
+      setMyTeam(appState, res);
+      render(appState);
+      eventHandlers();
+    });
   });
 }
 // IN WHICH WE LOAD
@@ -222,7 +258,7 @@ function initialLoad() {
     updateState(appState, res);
     setActivePage(appState,'home');
     //stubbed for test data
-    setMyTeam(appState, '');
+    setMyTeam(appState, appState.raidTeams[1]);
     render(appState);
   });
 }
