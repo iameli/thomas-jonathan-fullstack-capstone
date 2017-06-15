@@ -4,7 +4,7 @@ const appState = {
   raidTeams: [],
   activePage: '',
   myTeam: {},
-  myUserId: '5942e415d1a02538c54f933d'
+  myUserId: ''
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
@@ -51,17 +51,17 @@ function removeApplicant(teamId, applicantId) {
 // IN WHICH WE PERFORM FUNCTIONS RELATED TO AJAX REQUESTS
 
 // splice out an applicant from array of applicants
-function spliceApplicant(state, applicantId) {
-  const myApplicants = state.myTeam.applicants;
-  let indexToSplice;
-  myApplicants.forEach(applicant => {
-    if (applicantId === applicant._id) {
-      indexToSplice = myApplicants.indexOf(applicant);
-    }
-  });
-  myApplicants.splice(indexToSplice, 1);
-  return myApplicants;
-}
+// function spliceApplicant(state, applicantId) {
+//   const myApplicants = state.myTeam.applicants;
+//   let indexToSplice;
+//   myApplicants.forEach(applicant => {
+//     if (applicantId === applicant._id) {
+//       indexToSplice = myApplicants.indexOf(applicant);
+//     }
+//   });
+//   myApplicants.splice(indexToSplice, 1);
+//   return myApplicants;
+// }
 // IN WHICH WE MODIFY THE STATE
 function updateState(state, data) {
   state.raidTeams = data;
@@ -74,7 +74,26 @@ function setMyTeam(state, myNewTeam) {
 }
 // IN WHICH WE RENDER
 function render(state) {
+  function renderHeader() {
+    const logoutLink = '<a id="logout-link" href="#">Logout</a>';
+    const loginLink = '<a id="login-link" href="#">Login</a>';
+    const accountLink = '<a id="account-link" href="#">Account</a>';
+    const signupLink = '<a id="signup-link" href="#">Signup</a>';
+    const header = `<div class="head">
+                      <a id="home-link" href="#"><h2>Raid.io</h2></a>
+                    </div>
 
+                    <div class="account-controls col-3">
+                      <ul>
+                        <!-- <li><a href="#">Login</a></li>
+                        <li><a href="#">Signup</a></li> -->
+                        <li>${(state.myUserId === '') ? loginLink : logoutLink}</li>
+                        <li>${(state.myUserId === '') ? signupLink : accountLink}</li>
+                      </ul>
+                    </div>`;
+
+    $('.header-root').html(header);
+  }
   function renderHomePage() {
     const filterBox = `<div class="row">
                         <div class="col-3 filter-box">
@@ -110,6 +129,7 @@ function render(state) {
     });
     $('.content-root').html(teamPosts);
   }
+
   function renderAccountPage() {
     // HTML components
     const navBar = `<div class="row nav-bar">
@@ -244,11 +264,14 @@ function render(state) {
 
 
   if (state.activePage === 'home') {
+    renderHeader();
     renderHomePage();
   } else if (state.activePage === 'account-members') {
+    renderHeader();
     renderAccountPage();
     addMembersToAccountPage();
   } else if (state.activePage === 'account-applicants') {
+    renderHeader();
     renderAccountPage();
     addApplicantsToAccountPage();
   }
