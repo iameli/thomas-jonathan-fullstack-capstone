@@ -27,6 +27,28 @@ router.put('/:id', (req,res) => {
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
+router.post('/:teamId/:fieldName/:applicantId', (req, res) => {
+  //validation
+
+  Raid
+    .findByIdAndUpdate(req.params.teamId,
+      { $push: { [req.params.fieldName]: req.params.applicantId } },
+      {new: true})
+    .exec()
+    .then(response => res.status(200).json(response));
+});
+
+router.delete('/:teamId/:fieldName/:applicantId', (req, res) => {
+  //validation
+
+  Raid
+    .findByIdAndUpdate(req.params.teamId,
+      { $pull: { [req.params.fieldName]: req.params.applicantId } },
+      {new: true})
+    .exec()
+    .then(response => res.status(200).json(response));
+});
+
 // router.put('/apply/:id', (req,res) => {
 //
 // });

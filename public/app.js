@@ -282,10 +282,10 @@ function eventHandlers() {
     const newClassName = criteria[0].value;
     const myTeamId = appState.myTeam.id;
     const requestBody = {
-      applicants: spliceApplicant(appState, applicantId),
+      // applicants: spliceApplicant(appState, applicantId),
       [newClassName]: ''
     };
-
+    console.log('appID'+applicantId, newClassName, 'teamId'+myTeamId);
 
   });
   $('.content-root .cancel-btn').on('click', e => {
