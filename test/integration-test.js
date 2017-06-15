@@ -181,80 +181,85 @@ describe('MVP', function() {
            raid.id.should.be.equal(res.body[0].id);
          });
     });
-    it.only('should add a user to applicants', function() {
-      const applicant = '5942b622f1eb422f14474658';
+
+    it('should add a user to applicants', function() {
+      let applicant = '';
 
       return Raid.findOne()
         .exec()
         .then(raid => {
+          applicant = raid.jobs.dragoons[0];
           return chai.request(app)
-            .put(`/raid/${raid.id}/${raid.applicants[0]}`);
+            .put(`/raid/${raid.id}/${applicant}`);
         })
         .then(res => {
-          console.log('hello',res);
           let check = false;
           res.body.applicants.forEach(player => {
-            if(player === applicant) {
+            if(player._id === applicant.toString()) {
               check = true;
             }
-            check.should.be.true;
           });
-        });
-    });
-    it('should update a raid team with given data', function() {
-      const updateData = {
-        name: 'Test name',
-        jobs: {
-          darkKnights: ''
-        },
-        applying: {
-          player: ''
-        }
-      };
-
-      return Raid.findOne()
-        .exec()
-        .then(raid => {
-          testRaid = raid;
-          updateData.id = raid.id;
-          updateData.jobs.darkKnights = raid.applicants[0];
-          updateData.applicants = raid.applicants.splice(0,1);
-          updateData.applying.player = raid.applicants[0];
-          return chai.request(app)
-            .put(`/raid/${raid.id}`)
-            .send(updateData);
-        })
-        .then(res => {
-          let classTest = false;
           res.should.have.status(201);
           res.should.be.json;
           res.body.should.be.a('object');
-          res.body.name.should.equal(updateData.name);
-          res.body.applicants.forEach((applicant, index) => {
-            applicant._id.should.equal(updateData.applicants[index].toString());
-          });
-          res.body.members.tanks.forEach(tank => {
-            if(tank.id === updateData.jobs.darkKnights.toString() && tank.class === 'Dark Knight') {
-
-              classTest = true;
-            }
-          });
-          classTest.should.be.true;
-
-          return Raid.findById(res.body.id).exec();
-        })
-        .then(raid => {
-          raid.name.should.equal(updateData.name);
-          raid.applicants.forEach((applicant, index) => {
-            applicant.toString().should.be.equal(updateData.applicants[index].toString());
-          });
-          raid.jobs.paladins.forEach((paladin, index) => {
-            paladin.toString().should.be.equal(updateData.jobs.darkKnights.toString());
-          });
+          check.should.be.true;
         });
-
     });
-  });
+
+    // it('should update a raid team with given data', function() {
+    //   const updateData = {
+    //     name: 'Test name',
+    //     jobs: {
+    //       darkKnights: ''
+    //     },
+    //     applying: {
+    //       player: ''
+    //     }
+    //   };
+  //
+  //     return Raid.findOne()
+  //       .exec()
+  //       .then(raid => {
+  //         testRaid = raid;
+  //         updateData.id = raid.id;
+  //         updateData.jobs.darkKnights = raid.applicants[0];
+  //         updateData.applicants = raid.applicants.splice(0,1);
+  //         updateData.applying.player = raid.applicants[0];
+  //         return chai.request(app)
+  //           .put(`/raid/${raid.id}`)
+  //           .send(updateData);
+  //       })
+  //       .then(res => {
+  //         let classTest = false;
+  //         res.should.have.status(201);
+  //         res.should.be.json;
+  //         res.body.should.be.a('object');
+  //         res.body.name.should.equal(updateData.name);
+  //         res.body.applicants.forEach((applicant, index) => {
+  //           applicant._id.should.equal(updateData.applicants[index].toString());
+  //         });
+  //         res.body.members.tanks.forEach(tank => {
+  //           if(tank.id === updateData.jobs.darkKnights.toString() && tank.class === 'Dark Knight') {
+  //
+  //             classTest = true;
+  //           }
+  //         });
+  //         classTest.should.be.true;
+  //
+  //         return Raid.findById(res.body.id).exec();
+  //       })
+  //       .then(raid => {
+  //         raid.name.should.equal(updateData.name);
+  //         raid.applicants.forEach((applicant, index) => {
+  //           applicant.toString().should.be.equal(updateData.applicants[index].toString());
+  //         });
+  //         raid.jobs.paladins.forEach((paladin, index) => {
+  //           paladin.toString().should.be.equal(updateData.jobs.darkKnights.toString());
+  //         });
+  //       });
+  //
+  //   });
+  // });
 
 
   // describe('Login URL', function() {
@@ -297,5 +302,5 @@ describe('MVP', function() {
   //       console.error(err);
   //     });
   //   });
-  // });
+  });
 });

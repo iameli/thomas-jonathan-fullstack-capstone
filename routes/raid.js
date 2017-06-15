@@ -19,39 +19,69 @@ router.put('/:id/:userId', (req, res) => {
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
 
-router.put('/:id', (req,res) => {
-  const updated = {};
-  const updatedJobs = {};
-  const updatedApplicants = {};
-  let updateableData = ['applicants','name', 'time', 'leader'];
-  if(req.body.jobs) {
-    updateableData = updateableData.concat(Object.keys(req.body.jobs));
-  }
-  if(req.body.applying) {
-    updateableData = updateableData.concat(Object.keys(req.body.applying));
-  }
+// router.put('/:id', (req,res) => {
+//   const updated = {};
+//   const updatedJobs = {};
+//   const updatedApplicants = {};
+//   let updateableData = ['applicants','name', 'time', 'leader'];
+//   if(req.body.jobs) {
+//     updateableData = updateableData.concat(Object.keys(req.body.jobs));
+//   }
+//   if(req.body.applying) {
+//     updateableData = updateableData.concat(Object.keys(req.body.applying));
+//   }
+//
+//   updateableData.forEach(field => {
+//     if ( field in req.body) {
+//       updated[field] = req.body[field];
+//     }else if(field in req.body.jobs) {
+//       updatedJobs[`jobs.${field}`] = req.body.jobs[field];
+//     }else if(field in req.body.applying) {
+//       updatedJobs['applicants'] = req.body.applying[field];
+//     }
+//   });
+//   console.log(updated);
+//   console.log(updatedJobs);
+//   Raid
+//    .findByIdAndUpdate(req.params.id, {$push: {applicants: req.params.userId}}, {new: true})
+//    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
+//    .exec()
+//    .then(raid => {
+//      res.status(201).json(raid.apiRepr());
+//    })
+//    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+// });
 
-  updateableData.forEach(field => {
-    if ( field in req.body) {
-      updated[field] = req.body[field];
-    }else if(field in req.body.jobs) {
-      updatedJobs[`jobs.${field}`] = req.body.jobs[field];
-    }else if(field in req.body.applying) {
-      updatedJobs['applicants'] = req.body.applying[field];
-    }
-  });
-  console.log(updated);
-  console.log(updatedJobs);
-  Raid
-   .findByIdAndUpdate(req.params.id, {$set: updated, $push: updatedJobs}, {new: true})
-   .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
-   .exec()
-   .then(raid => {
-     console.log(raid);
-     res.status(201).json(raid.apiRepr());
-   })
-   .catch(err => res.status(500).json({message: 'Something went wrong'}));
-});
+// router.put('/:id', (req,res) => {
+//   const updated = {};
+//   const updatedJobs = {};
+//   const updatedApplicants = {};
+//   let updateableData = ['applicants','name', 'time', 'leader'];
+//   if(req.body.jobs) {
+//     updateableData = updateableData.concat(Object.keys(req.body.jobs));
+//   }
+//   if(req.body.applying) {
+//     updateableData = updateableData.concat(Object.keys(req.body.applying));
+//   }
+//
+//   updateableData.forEach(field => {
+//     if ( field in req.body) {
+//       updated[field] = req.body[field];
+//     }else if(field in req.body.jobs) {
+//       updatedJobs[`jobs.${field}`] = req.body.jobs[field];
+//     }else if(field in req.body.applying) {
+//       updatedJobs['applicants'] = req.body.applying[field];
+//     }
+//   });
+//   Raid
+//    .findByIdAndUpdate(req.params.id, {$set: updated, $push: updatedJobs}, {new: true})
+//    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
+//    .exec()
+//    .then(raid => {
+//      res.status(201).json(raid.apiRepr());
+//    })
+//    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+// });
 
 router.post('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
