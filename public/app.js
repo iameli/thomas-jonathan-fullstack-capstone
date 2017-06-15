@@ -174,8 +174,12 @@ function render(state) {
     let applicantsPosts = '';
     applicants.forEach(applicant => {
       let classesToDisplay = '';
+      let classesForAccept = [];
+      let stringOfClassOptions = '';
       applicant.playerClass.forEach(_class => {
         classesToDisplay += `${_class.className}: ${_class.level}, `;
+        stringOfClassOptions += `<option value="${_class.className}">${_class.className} @lvl${_class.level}</option><br>`;
+        classesForAccept.push(`${_class.className} @lvl${_class.level}`);
       });
       applicantsPosts += `<div class="row">
                         <div class="team-member" data-id=${applicant._id}>
@@ -190,6 +194,23 @@ function render(state) {
                               <li><a class="button-good js-team-accept" href="#">Accept</a></li>
                               <li><a class="button-bad js-team-reject" href="#">Reject</a></li>
                             </ul>
+                          </div>
+                          <div class="col-12">
+                            <form class="role-select-form">
+                              <fieldset>
+                                <select name="select-class" required="true">
+                                  ${stringOfClassOptions}
+                                </select>
+                                <input id="tank-btn-${applicant._id}" type="radio" name="team-role" value="Tank" />
+                                <label for="tank-btn">Tank</label> |
+                                <input id="healer-btn-${applicant._id}" type="radio" name="team-role" value="Healer" />
+                                <label for="healer-btn">Healer</label> |
+                                <input id="dps-btn-${applicant._id}" type="radio" name="team-role" value="DPS" />
+                                <label for="dps-btn">DPS</label> |
+                                <input type="submit" value="Submit">
+                                <button type="button" name="cancel-btn">Cancel</button>
+                              </fieldset>
+                            </form>
                           </div>
                         </div>
                       </div>`;

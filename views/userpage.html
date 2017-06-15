@@ -71,6 +71,27 @@
                   <li><a class="button-bad js-team-reject" href="#">Reject</a></li>
                 </ul>
               </div>
+
+              <div class="col-12">
+                <form class="role-select-form">
+                  <fieldset>
+                    <select name="select-class" required="true">
+                      <option value="className1">ClassName1</option>
+                      <option value="className2">ClassName2</option>
+                      <option value="className3">ClassName3</option>
+                    </select>
+                    <input id="tank-btn" type="radio" name="team-role" value="Tank" />
+                    <label for="tank-btn">Tank</label> |
+                    <input id="healer-btn" type="radio" name="team-role" value="Healer" />
+                    <label for="healer-btn">Healer</label> |
+                    <input id="dps-btn" type="radio" name="team-role" value="DPS" />
+                    <label for="dps-btn">DPS</label> |
+                    <input type="submit" value="Submit">
+                    <button type="button" name="cancel-btn">Cancel</button>
+                  </fieldset>
+                </form>
+              </div>
+              
             </div>
           </div>
 
@@ -108,7 +129,7 @@
               </div>
             </div>
           </div>
-          
+
       </div>
     </div>
   </body>
