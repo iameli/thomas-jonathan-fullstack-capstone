@@ -35,7 +35,7 @@ function seedUserData() {
   for (let i=1; i<=10; i++) {
     seedData.push(  {
       username: faker.internet.userName(),
-      password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+      password: '$2a$10$4W/.zCc1XG/X2ZEYYd.JeORx5J1JmLq/OnrJDGziP/Vxow57p93hq',
       email: faker.internet.email(),
       discord: faker.internet.userName(),
       playerName: {
@@ -104,6 +104,17 @@ describe('MVP', function() {
     });
   });
 
+  describe('Login URL', function() {
+    it('should respond with a status of 200 and HTML', function() {
+      return chai.request(app)
+        .get('/')
+        .then(function(result) {
+          result.should.have.status(200);
+          result.should.be.html;
+        });
+    });
+  });
+
   //Tests for user router
   describe('User endpoint', function() {
 
@@ -142,7 +153,7 @@ describe('MVP', function() {
        });
     });
 
-    it('should update a user\'s\ team when accepted', function() {
+    it.only('should update a user\'s\ team when accepted', function() {
       let testUser;
       let testRaid;
       return User
@@ -155,12 +166,20 @@ describe('MVP', function() {
          .then(raid => {
            testRaid = raid;
            return chai.request(app)
-             .put(`/user/${raid._id}/${testUser._id}`)
+             .get('auth/login')
+             .auth(testUser.username, 'test-password')
              .then(res => {
-               res.should.have.status(201);
+               console.log(res);
+               return chai.request(app)
+             .put(`/user/${raid._id}/${testUser._id}`)
+             .auth(testUser.username, 'test-password')
+             .then(res => {
+               console.log(res);
+               res.should.have.status(200);
                res.should.be.json;
                res.body.should.be.a('object');
                res.body.team.should.equal(raid._id.toString());
+             });
              });
          });
        });

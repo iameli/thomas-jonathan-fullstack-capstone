@@ -13,28 +13,13 @@ mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
 
-//Basic authentication strategy
-const strategy = new BasicStrategy(function(username, password, callback) {
-  let user;
-  User
-    .findOne({username: username})
-    .exec()
-    .then(_user => {
-      user = _user;
-      if (!user) {
-        return callback(null, false, {message: 'Incorrect username'});
-      }
-      return user.validatePassword(password);
-    })
-    .then(isValid => {
-      if (!isValid) {
-        return callback(null, false, {message: 'Incorrect password'});
-      }
-      else {
-        return callback(null, user);
-      }
-    });
-});
+function loggedIn(req, res, next) {
+  if(req.user) {
+    next();
+  } else {
+    res.status(401).json({redirect: '../views/login.html', message: 'Please sign in'});
+  }
+}
 
 //Get all users from database
 router.get('/', (req, res) => {
@@ -68,18 +53,20 @@ router.get('/:id', (req, res) => {
 });
 
 //Update what team the user is on for when they are accepted on a team
-router.put('/:id/:userId', (req,res) => {
+router.put('/:id/:userId', loggedIn, (req,res) => {
+  console.log('hello');
   User
     .findByIdAndUpdate(req.params.userId,
       {$push: {team: `${req.params.id}`}},
       {new: true})
     .exec()
-    .then(user => res.status(201).json(user.apiRepr()));
+    .then(user => res.status(200).json(user.apiRepr()))
+    .catch(err => res.status(500).send(err));
 });
 
 //Allow the creation of a new user
 router.post('/', (req, res) => {
-  const requiredFields = ['username', 'email', 'password', 'playerName'];
+  const requiredFields = ['username', 'email', 'password', 'playerName', 'playerClass'];
   const missingIndex = requiredFields.findIndex(field => !req.body[field]);
   if(missingIndex !== -1) {
     return res.status(400).json({

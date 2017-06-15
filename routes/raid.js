@@ -10,19 +10,26 @@ const {Raid} = require('../models/raid-model');
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
-//Apply
-router.put('/:id/:userId', (req, res) => {
+//Check to see if the user is logged in
+function loggedIn(req, res, next) {
+  if(req.user) {
+    next();
+  } else {
+    res.json({redirect: '../views/login.html', message: 'Please sign in'});
+  }
+}
+//PUT (password protected, must have session cookie) for adding a player to applicants
+router.put('/:id/:userId', loggedIn, (req, res) => {
   Raid
    .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})
    .populate('leader applicants jobs.paladins jobs.warriors jobs.darkKnights jobs.whiteMages jobs.scholars jobs.astrologians jobs.ninjas jobs.dragoons jobs.samurais jobs.monks jobs.redMages jobs.summoners jobs.blackMages jobs.bards jobs.machinists')
    .exec()
-   .then(raid => res.status(201).json(raid.apiRepr()))
+   .then(raid => res.status(200).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
-//Accept
-router.post('/:teamId/:fieldName/:playerId', (req, res) => {
+//POST (password protected, must have session cookie) for adding an applicant to a job.
+router.post('/:teamId/:fieldName/:playerId', loggedIn, (req, res) => {
   //validation
-
   Raid
     .findByIdAndUpdate(req.params.teamId,
       { $push: { [req.params.fieldName]: req.params.playerId } },
@@ -31,8 +38,9 @@ router.post('/:teamId/:fieldName/:playerId', (req, res) => {
     .exec()
     .then(response => res.status(200).json(response.apiRepr()));
 });
-//Reject
-router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
+
+//DELETE (password protected, must have session cookie) for removing a player from a raid field
+router.delete('/:teamId/:fieldName/:playerId',loggedIn, (req, res) => {
   //validation
 
   Raid
