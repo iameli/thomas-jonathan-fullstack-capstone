@@ -10,7 +10,7 @@ const {Raid} = require('../models/raid-model');
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
-
+//Apply
 router.put('/:id/:userId', (req, res) => {
   Raid
    .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})
@@ -19,7 +19,7 @@ router.put('/:id/:userId', (req, res) => {
    .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
-
+//Accept
 router.post('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
@@ -31,7 +31,7 @@ router.post('/:teamId/:fieldName/:playerId', (req, res) => {
     .exec()
     .then(response => res.status(200).json(response.apiRepr()));
 });
-
+//Reject
 router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
