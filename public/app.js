@@ -196,7 +196,7 @@ function render(state) {
                             </ul>
                           </div>
                           <div class="col-12">
-                            <form class="role-select-form">
+                            <form class="role-select-form" hidden>
                               <fieldset>
                                 <select name="select-class" required="true">
                                   ${stringOfClassOptions}
@@ -261,7 +261,8 @@ function eventHandlers() {
   });
   $('.content-root .js-team-accept').on('click', e => {
     e.preventDefault();
-    console.log('Accept works!');
+    const element = $(e.currentTarget).closest('div').next().find('form');
+    element.removeAttr('hidden');
   });
   $('.content-root .js-team-reject').on('click', e => {
     e.preventDefault();
