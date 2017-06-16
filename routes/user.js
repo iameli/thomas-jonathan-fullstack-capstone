@@ -13,29 +13,6 @@ mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
 
-//Basic authentication strategy
-const strategy = new BasicStrategy(function(username, password, callback) {
-  let user;
-  User
-    .findOne({username: username})
-    .exec()
-    .then(_user => {
-      user = _user;
-      if (!user) {
-        return callback(null, false, {message: 'Incorrect username'});
-      }
-      return user.validatePassword(password);
-    })
-    .then(isValid => {
-      if (!isValid) {
-        return callback(null, false, {message: 'Incorrect password'});
-      }
-      else {
-        return callback(null, user);
-      }
-    });
-});
-
 //Get all users from database
 router.get('/', (req, res) => {
   return User
@@ -79,7 +56,7 @@ router.put('/:id/:userId', (req,res) => {
 
 //Allow the creation of a new user
 router.post('/', (req, res) => {
-  const requiredFields = ['username', 'email', 'password', 'playerName'];
+  const requiredFields = ['username', 'email', 'password', 'playerName', 'playerClass'];
   const missingIndex = requiredFields.findIndex(field => !req.body[field]);
   if(missingIndex !== -1) {
     return res.status(400).json({

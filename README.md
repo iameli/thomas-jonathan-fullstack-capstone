@@ -19,6 +19,47 @@ And you can also manage your team:
 Accepting members or rejecting them:
 
 ## the API
+Our RESTful API has various endpoints that allow for the creation of a user(sign up), the querying of user and raid team data, and updating team
+data.
+
+Get User Data:
+Send an ajax request with a get method to /user to receive data on all users or to /user/(specific user id) to retrieve data on a particular
+user. User data will be returned as a json object with data {id, username, discord, playerName{firstName, lastName},
+playerClass[{className, level}]}, team(if they're on one).
+
+id: User's unique database id
+username: User's username
+email: User's email
+discord: User's discord username
+playerName: First and last name of the User's in game character name
+playerClass: The classes the User's character has leveled.
+
+Get Raid Data:
+Similar to getting user data, but using /raid and /raid/(specific raid id). Data returned will be in the format of
+{id, name, leader, time, applicants[], members{tanks[], healers[], dps[]}}.
+
+id: The raids database id
+name: The name of the raid
+leader: The user who is the leader/manager of the raid
+applicants: People who are currently applying to the raid
+members: People who are currently a part of the team, separated into role
+
+Creating a User:
+Create an ajax request using a post method with data for username, password, discord screenname, email, player name, and player class
+to the endpoint 'baseURL'/user to create new user data in the database. The data for the created user will return as a json object
+(with the password hashed of course).
+
+Managing a Raid:
+Currently, the api allows for some light team management through three endpoints.
+
+To add a user to a raid field, create an ajax request with a post
+method to /raid/(raid id)/(field)/(user id).
+
+To delete a user from a raid field, create an ajax request with a delete method to /raid/(raid id)/(field)/(user id).
+
+To add a user specifically to the applicants field, create an ajax request with a put method to /raid/(raid id)/(user id).
+
+
 
 ## the Stack
 
