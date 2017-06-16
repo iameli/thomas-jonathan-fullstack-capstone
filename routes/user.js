@@ -4,21 +4,21 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const {User} = require('../models/user-model');
-const {loggedIn} = require('./auth');
+// const {loggedIn} = require('./auth');
 const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
 
-// function loggedIn(req, res, next) {
-//   console.log('Request',req.user);
-//   if(req.user) {
-//     next();
-//   } else {
-//     res.status(401).json({redirect: '../views/login.html', message: 'Please sign in'});
-//   }
-// }
+function loggedIn(req, res, next) {
+  console.log('Request', req.user);
+  if(req.user) {
+    next();
+  } else {
+    res.status(401).json({redirect: '../views/login.html', message: 'Please sign in'});
+  }
+}
 
 //Get all users from database
 router.get('/', (req, res) => {
@@ -37,6 +37,12 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET for user session (protected, must be signed-in already and have session cookie)
+router.get('/me/foobar', loggedIn, (req, res, next) => {
+  console.log('I am here!');
+  res.json({message: 'hi'});
+}
+);
 //Allow queries for a single user
 router.get('/:id', (req, res) => {
   return User
@@ -51,16 +57,18 @@ router.get('/:id', (req, res) => {
     });
 });
 
-//Update what team the user is on for when they are accepted on a team
-router.put('/:id/:userId', loggedIn, (req,res) => {
-  User
-    .findByIdAndUpdate(req.params.userId,
-      {$push: {team: `${req.params.id}`}},
-      {new: true})
-    .exec()
-    .then(user => res.status(200).json(user.apiRepr()))
-    .catch(err => res.status(500).send(err));
-});
+
+// Update what team the user is on for when they are accepted on a team
+// router.put('/:id/:userId', loggedIn, (req,res) => {
+//   console.log('Hey we got here');
+//   User
+//     .findByIdAndUpdate(req.params.userId,
+//       {$push: {team: `${req.params.id}`}},
+//       {new: true})
+//     .exec()
+//     .then(user => res.status(200).json(user.apiRepr()))
+//     .catch(err => res.status(500).send(err));
+// });
 
 //Allow the creation of a new user
 router.post('/', (req, res) => {

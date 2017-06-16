@@ -149,10 +149,10 @@ describe('MVP', function() {
 				.auth('testuser', 'test-password')
         .then(res => {
           return agent.get('/auth/me')
-          .then(res => {
-            res.should.have.status(200);
-            res.body.user.username.should.equal('testuser');
-            res.body.user.should.include.keys(
+          .then(result => {
+            result.should.have.status(200);
+            result.body.user.username.should.equal('testuser');
+            result.body.user.should.include.keys(
               'username','email', 'playerName', 'playerClass'
             );
           });
@@ -198,35 +198,61 @@ describe('MVP', function() {
        });
     });
 
-    it.only('should update a user\'s\ team when accepted', function() {
+    it.only('should return user that is signed in', function() {
+      let agent = chai.request.agent(app);
+      return agent
+				.get('/auth/login') // first have to log in
+				.auth('testuser', 'test-password')
+        .then(res => {
+          return agent.get('/user/me/foobar')
+          .then(res => {
+            console.log(res);
+            res.should.have.status(200);
+            // res.body.user.username.should.equal('testuser');
+            // res.body.user.should.include.keys(
+            //   'username','email', 'playerName', 'playerClass'
+            // );
+          });
+        });
+    });
+
+    it('should update a user\'s\ team when accepted', function() {
       let testUser;
       let testRaid;
       let agent = chai.request.agent(app);
       return agent
        .get('/auth/login')
        .auth('testuser', 'test-password')
-       .then(() => {
-         return User
-          .findOne()
-          .exec()
-          .then(user => {
-            testUser = user;
-            return Raid.findOne()
-             .exec()
-             .then(raid => {
-               testRaid = raid;
-               return agent
-                 .put(`/user/${raid._id}/${testUser._id}`)
-                 .send()
-                 .then(res => {
-                   console.log(res);
-                   res.should.have.status(200);
-                   res.should.be.json;
-                   res.body.should.be.a('object');
-                   res.body.team.should.equal(raid._id.toString());
-                 });
-             });
-          });
+       //.send()
+       .then((result) => {
+         console.log(result);
+         return agent.get('/user/me/foobar')
+         .then(res => {
+           console.log(res);
+           res.should.have.status(200);
+         });
+        //  return User
+        //   .findOne()
+        //   .exec()
+        //   .then(user => {
+        //     testUser = user;
+        //     return Raid.findOne()
+        //      .exec()
+        //      .then(raid => {
+        //        testRaid = raid;
+        //        return agent
+        //          .put(`/user/${raid._id}/${testUser._id}`)
+        //          .auth('testuser', 'test-password')
+        //          .send()
+        //          .then(res => {
+        //           //  console.log(res);
+        //            res.should.have.status(200);
+        //            res.should.be.json;
+        //            res.body.should.be.a('object');
+        //            res.body.team.should.equal(raid._id.toString());
+        //          });
+        //      });
+        //   });
        });
 
     });
