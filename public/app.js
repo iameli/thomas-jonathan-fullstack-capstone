@@ -4,7 +4,8 @@ const appState = {
   raidTeams: [],
   activePage: '',
   myTeam: {},
-  myUserId: ''
+  myUser: {},
+  myUserId: 'stuff'
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
@@ -20,6 +21,12 @@ function fetchTeam(teamId) {
   return $.ajax({
     method: 'GET',
     url: `/raid/${teamId}`
+  });
+}
+function fetchUser(userId) {
+  return $.ajax({
+    method: 'GET',
+    url: `/user/${userId}`
   });
 }
 function applyToTeam(teamId, applicantId) {
@@ -193,6 +200,27 @@ function render(state) {
     $('.content-root').html(signupPage);
   }
 
+  function renderMyProfile() {
+    const myProfile = `  <div class="row">
+                          <div class="my-profile">
+                            <div class="col-6 column-left">
+                                <img class="team-member-thumb" src="http://placehold.it/500x500" alt="My profile image">
+                            </div>
+                            <div class="col-6 column-right">
+                              <h3>This is my username!</h3>
+                              <ul>
+                                <li>this is my email</li>
+                                <li>this is my discord screenname</li>
+                              </ul>
+                              <h5>this is my playerName</h5>
+                              <h5>this is my playerClass</h5>
+                              <p>Meggings microdosing XOXO sartorial butcher hot chicken post-ironic, drinking vinegar asymmetrical lomo hashtag hexagon. Drinking vinegar hexagon coloring book franzen. Et photo booth lumbersexual, irony chartreuse beard tumblr magna cliche post-ironic. Occupy locavore forage, scenester eu mumblecore kale chips. Esse you probably haven't heard of them id +1 try-hard next level. Jianbing edison bulb readymade, dreamcatcher kale chips adipisicing chartreuse typewriter godard lyft dolor williamsburg bespoke anim. Austin aute vice ennui, plaid dolore mlkshk man braid in.</p>
+                            </div>
+                          </div>
+                        </div>`;
+    $('.content-root').html(myProfile);
+  }
+
   function renderAccountPage() {
     // HTML components
     const navBar = `<div class="row nav-bar">
@@ -329,11 +357,14 @@ function render(state) {
   if (state.activePage === 'home') {
     renderHeader();
     renderHomePage();
-  } else if (state.activePage === 'account-members') {
+  } else if (state.activePage === 'account-my-profile'){
+    renderHeader();
+    renderMyProfile();
+  } else if (state.activePage === 'account-myteam-members') {
     renderHeader();
     renderAccountPage();
     addMembersToAccountPage();
-  } else if (state.activePage === 'account-applicants') {
+  } else if (state.activePage === 'account-myteam-applicants') {
     renderHeader();
     renderAccountPage();
     addApplicantsToAccountPage();
@@ -347,7 +378,7 @@ function render(state) {
 function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState, 'account-members');
+    setActivePage(appState, 'account-myteam-members');
     render(appState);
     eventHandlers();
   });
@@ -370,13 +401,13 @@ function eventHandlers() {
   });
   $('#team-members-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState,'account-members');
+    setActivePage(appState,'account-myteam-members');
     render(appState);
     eventHandlers();
   });
   $('#team-applicants-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState,'account-applicants');
+    setActivePage(appState,'account-myteam-applicants');
     render(appState);
     eventHandlers();
   });
