@@ -4,7 +4,15 @@ Find the demo app at https://thomas-jonathan-capstone.herokuapp.com/
 
 ## the Application
 
-Raid.io is a handy way to find, apply, create, and manage your FFXIV raid team.
+Raid.io is a handy way to find, apply, create, and manage your FFXIV raid teams. You can get rid of all those messy google docs and spreadsheets and manage your team from a single application.
+
+Our MVP is targeted specifically at FFIV players but in the future is easily expandable to a wide variety of MMOs.
+
+## Design and Screengrabs
+
+Color Palette:
+
+![color palette](demo/fullstack_capstone_palette.pdf)
 
 Current teams are listed on the homepage:
 
@@ -12,7 +20,7 @@ Current teams are listed on the homepage:
 
 Signup for an account and add your player info:
 
-![Sign up for an account screengrab](demo/HomePageScroll.gif)
+![Sign up for an account screengrab](demo/SignUp.gif)
 
 Then apply to whatever team you like:
 
