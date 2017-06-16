@@ -37,6 +37,8 @@ raidSchema.methods.apiRepr = function() {
   const healers = [];
   const dps = [];
 
+  //We need to take the data out of the jobs objec and make it more
+  //manageable for the front end.
   const jobsArray = Object.keys(this.jobs.toObject());
   jobsArray.forEach(job => {
     if(this.jobs[job].length !== 0) {

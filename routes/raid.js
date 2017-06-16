@@ -10,8 +10,8 @@ const {Raid} = require('../models/raid-model');
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
-//Apply
 
+//Let a player apply ot a raid team
 router.put('/:id/:userId', (req, res) => {
   Raid
    .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})
@@ -20,7 +20,8 @@ router.put('/:id/:userId', (req, res) => {
    .then(raid => res.status(201).json(raid.apiRepr()))
    .catch(err => res.status(500).json({message: 'Something went wrong'}));
 });
-//Accept
+
+//Let a raid leader accept an applicant into a role
 router.post('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
@@ -32,7 +33,8 @@ router.post('/:teamId/:fieldName/:playerId', (req, res) => {
     .exec()
     .then(response => res.status(200).json(response.apiRepr()));
 });
-//Reject
+
+//Let's the raid leader reject and apllicant
 router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
   //validation
 
@@ -45,6 +47,7 @@ router.delete('/:teamId/:fieldName/:playerId', (req, res) => {
     .then(updatedTeam => res.status(200).json(updatedTeam.apiRepr()));
 });
 
+//Return data on all raid teams
 router.get('/', (req, res) => {
   Raid
     .find()
@@ -62,6 +65,7 @@ router.get('/', (req, res) => {
     });
 });
 
+//Return data on a specific raid team
 router.get('/:id', (req, res) => {
   Raid
     .findById(req.params.id)

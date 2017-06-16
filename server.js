@@ -3,9 +3,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
 const {PORT, DATABASE_URL} = require('./config');
-const loginRouter = require('./routes/login');
 const raidRouter = require('./routes/raid');
 const userRouter = require('./routes/user');
 const path = require('path');
@@ -18,9 +16,6 @@ const app = express();
 app.use(morgan('common'));
 
 //set routers
-// app.use('/login/', loginRouter);
-// app.use('/raid-management/', raidRouter);
-// app.use('/user-management', userRouter);
 app.use('/raid', raidRouter);
 app.use('/user', userRouter);
 
@@ -29,9 +24,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.static('public'));
-
-// app.listen(process.env.PORT || 8080);
-
 
 // Server stuff
 let server;
