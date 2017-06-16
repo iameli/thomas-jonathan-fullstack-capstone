@@ -12,6 +12,7 @@ const {BasicStrategy} = require('passport-http');
 //Basic authentication strategy
 const strategy = new BasicStrategy(function(username, password, callback) {
   let user;
+
   User
     .findOne({username: username})
     .exec()
@@ -23,13 +24,15 @@ const strategy = new BasicStrategy(function(username, password, callback) {
       return user.validatePassword(password);
     })
     .then(isValid => {
+
       if (!isValid) {
         return callback(null, false, {message: 'Incorrect password'});
       }
       else {
         return callback(null, user);
       }
-    });
+    })
+    .catch(err => console.log('Invalid username or password'));
 });
 
 router.use(require('express-session')({
@@ -38,7 +41,7 @@ router.use(require('express-session')({
   saveUninitialized: false
 }));
 
-passport.use(BasicStrategy);
+passport.use(strategy);
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -53,6 +56,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 function loggedIn(req, res, next) {
+  console.log('Hello');
   if(req.user) {
     next();
   } else {
@@ -64,7 +68,6 @@ function loggedIn(req, res, next) {
 router.get('/login',
 	passport.authenticate('basic', {session: true, failureRedirect: '/login.html'}),
 		(req, res) => {
-  console.log('hello');
   res.json({user: req.user.apiRepr(), message: 'Sign in successful'});
 }
 );
@@ -82,4 +85,4 @@ router.get('/logout', (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = {router, loggedIn};

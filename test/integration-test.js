@@ -32,6 +32,17 @@ function tearDownDb() {
 function seedUserData() {
   console.info('seeding user data');
   const seedData = [];
+  seedData.push(  {
+    username: 'testuser',
+    password: '$2a$10$4W/.zCc1XG/X2ZEYYd.JeORx5J1JmLq/OnrJDGziP/Vxow57p93hq',
+    email: faker.internet.email(),
+    discord: faker.internet.userName(),
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'Red Mage', level: 60}, {className: 'Ninja', level: 60}, {className: 'Samurai', level: 60}],
+  });
   for (let i=1; i<=10; i++) {
     seedData.push(  {
       username: faker.internet.userName(),
@@ -68,7 +79,6 @@ function seedRaidData(data) {
   };
 
   return Raid.create(testRaid);
-    // });
 }
 
 describe('MVP', function() {
@@ -115,6 +125,41 @@ describe('MVP', function() {
     });
   });
 
+  //Test authentication endpoint
+  describe('authentication router', function() {
+    it('should sign in user and return user account', function() {
+      let res;
+      let agent = chai.request.agent(app);
+      return agent
+            .get('/auth/login')
+            .auth('testuser', 'test-password')
+            .then(res => {
+              res.should.have.status(200);
+              res.body.user.username.should.equal('testuser');
+              res.body.user.should.include.keys(
+                'username','email', 'playerName', 'playerClass'
+              );
+            });
+    });
+
+    it('should return user that is signed in', function() {
+      let agent = chai.request.agent(app);
+      return agent
+				.get('/auth/login') // first have to log in
+				.auth('testuser', 'test-password')
+        .then(res => {
+          return agent.get('/auth/me')
+          .then(res => {
+            res.should.have.status(200);
+            res.body.user.username.should.equal('testuser');
+            res.body.user.should.include.keys(
+              'username','email', 'playerName', 'playerClass'
+            );
+          });
+        });
+    });
+  });
+
   //Tests for user router
   describe('User endpoint', function() {
 
@@ -156,33 +201,34 @@ describe('MVP', function() {
     it.only('should update a user\'s\ team when accepted', function() {
       let testUser;
       let testRaid;
-      return User
-       .findOne()
-       .exec()
-       .then(user => {
-         testUser = user;
-         return Raid.findOne()
-         .exec()
-         .then(raid => {
-           testRaid = raid;
-           return chai.request(app)
-             .get('auth/login')
-             .auth(testUser.username, 'test-password')
-             .then(res => {
-               console.log(res);
-               return chai.request(app)
-             .put(`/user/${raid._id}/${testUser._id}`)
-             .auth(testUser.username, 'test-password')
-             .then(res => {
-               console.log(res);
-               res.should.have.status(200);
-               res.should.be.json;
-               res.body.should.be.a('object');
-               res.body.team.should.equal(raid._id.toString());
+      let agent = chai.request.agent(app);
+      return agent
+       .get('/auth/login')
+       .auth('testuser', 'test-password')
+       .then(() => {
+         return User
+          .findOne()
+          .exec()
+          .then(user => {
+            testUser = user;
+            return Raid.findOne()
+             .exec()
+             .then(raid => {
+               testRaid = raid;
+               return agent
+                 .put(`/user/${raid._id}/${testUser._id}`)
+                 .send()
+                 .then(res => {
+                   console.log(res);
+                   res.should.have.status(200);
+                   res.should.be.json;
+                   res.body.should.be.a('object');
+                   res.body.team.should.equal(raid._id.toString());
+                 });
              });
-             });
-         });
+          });
        });
+
     });
 
     it('should create a user', function() {

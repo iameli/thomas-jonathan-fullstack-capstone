@@ -2,24 +2,23 @@
 
 const express = require('express');
 const router = express.Router();
-const morgan = require('morgan');
 const mongoose = require('mongoose');
 const {User} = require('../models/user-model');
+const {loggedIn} = require('./auth');
 const bodyParser = require('body-parser');
-const passport = require('passport');
-const {BasicStrategy} = require('passport-http');
 
 mongoose.Promise = global.Promise;
 
 router.use(bodyParser.json());
 
-function loggedIn(req, res, next) {
-  if(req.user) {
-    next();
-  } else {
-    res.status(401).json({redirect: '../views/login.html', message: 'Please sign in'});
-  }
-}
+// function loggedIn(req, res, next) {
+//   console.log('Request',req.user);
+//   if(req.user) {
+//     next();
+//   } else {
+//     res.status(401).json({redirect: '../views/login.html', message: 'Please sign in'});
+//   }
+// }
 
 //Get all users from database
 router.get('/', (req, res) => {
@@ -54,7 +53,6 @@ router.get('/:id', (req, res) => {
 
 //Update what team the user is on for when they are accepted on a team
 router.put('/:id/:userId', loggedIn, (req,res) => {
-  console.log('hello');
   User
     .findByIdAndUpdate(req.params.userId,
       {$push: {team: `${req.params.id}`}},
