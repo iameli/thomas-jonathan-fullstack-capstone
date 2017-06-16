@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>User Page</title>
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="../public/main.css">
+  </head>
+  <body>
+    <header>
+      <div class="head">
+        <a href="#"><h2>Raid.io</h2></a>
+      </div>
+
+      <div class="account-controls col-3">
+        <ul>
+          <li><a href="#">Logout</a></li>
+          <li><a href="#">Account</a></li>
+        </ul>
+      </div>
+    </header>
+    <div class="row">
+      <div class="col-12">
+        <div class="container form-container">
+          <form class="signup-form" action="/user" method="post">
+            <fieldset>
+              <label for="username">Username:</label><br>
+              <input type="text" name="username"><br>
+              <label for="password">Password:</label><br>
+              <input type="password" name="password"><br>
+              <!-- <input type="password" name="confirm-password" value="confirm password"> -->
+              <label for="email">Email:</label><br>
+              <input type="email" name="email"><br>
+              <label for="discord">Discord Screenname:</label><br>
+              <input type="text" name="discord"><br>
+              <label for="player-first-name">Player First Name</label><br>
+              <input type="text" name="player-first-name"><br>
+              <label for="player-last-name">Player Last Name</label><br>
+              <input type="text" name="player-last-name"><br>
+              <label for="select-player-class">Select Player Class:</label><br>
+              <select name="select-player-class">
+                <option value="paladins">Paladin</option>
+                <option value="warriors">Warrior</option>
+                <option value="darkKnights">Dark Night</option>
+                <option value="whiteMages">White Mage</option>
+                <option value="scholars">Scholar</option>
+                <option value="astrologians">Astrologian</option>
+                <option value="ninjas">Ninja</option>
+                <option value="dragoons">Dragoon</option>
+                <option value="samurais">Samurai</option>
+                <option value="monks">Monk</option>
+                <option value="redMages">Red Mage</option>
+                <option value="summoners">Summoner</option>
+                <option value="blackMages">Black Mage</option>
+                <option value="bards">Bard</option>
+                <option value="machinists">Machinist</option>
+              </select><br>
+              <button class="" type="submit" name="button">Submit</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

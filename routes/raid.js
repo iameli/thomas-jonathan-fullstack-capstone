@@ -10,7 +10,6 @@ const {Raid} = require('../models/raid-model');
 mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
-
 router.put('/:id/:userId', (req, res) => {
   Raid
    .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})

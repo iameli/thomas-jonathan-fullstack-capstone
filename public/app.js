@@ -72,6 +72,9 @@ function setActivePage(state, pageName) {
 function setMyTeam(state, myNewTeam) {
   state.myTeam = myNewTeam;
 }
+function setMyId(state, myId) {
+  state.myUserId = myId;
+}
 // IN WHICH WE RENDER
 function render(state) {
   function renderHeader() {
@@ -94,6 +97,7 @@ function render(state) {
 
     $('.header-root').html(header);
   }
+
   function renderHomePage() {
     const filterBox = `<div class="row">
                         <div class="col-3 filter-box">
@@ -128,6 +132,52 @@ function render(state) {
       </div>`;
     });
     $('.content-root').html(teamPosts);
+  }
+
+  function renderSignupPage() {
+    const signupPage = `  <div class="row">
+                            <div class="col-12">
+                              <div class="container form-container">
+                                <form class="signup-form js-signup-form" action="/user" method="post">
+                                  <fieldset>
+                                    <label for="username">Username:</label><br>
+                                    <input type="text" name="username"><br>
+                                    <label for="password">Password:</label><br>
+                                    <input type="password" name="password"><br>
+                                    <!-- <input type="password" name="confirm-password" value="confirm password"> -->
+                                    <label for="email">Email:</label><br>
+                                    <input type="email" name="email"><br>
+                                    <label for="discord">Discord Screenname:</label><br>
+                                    <input type="text" name="discord"><br>
+                                    <label for="player-first-name">Player First Name</label><br>
+                                    <input type="text" name="player-first-name"><br>
+                                    <label for="player-last-name">Player Last Name</label><br>
+                                    <input type="text" name="player-last-name"><br>
+                                    <label for="select-player-class">Select Player Class:</label><br>
+                                    <select name="select-player-class">
+                                      <option value="paladins">Paladin</option>
+                                      <option value="warriors">Warrior</option>
+                                      <option value="darkKnights">Dark Night</option>
+                                      <option value="whiteMages">White Mage</option>
+                                      <option value="scholars">Scholar</option>
+                                      <option value="astrologians">Astrologian</option>
+                                      <option value="ninjas">Ninja</option>
+                                      <option value="dragoons">Dragoon</option>
+                                      <option value="samurais">Samurai</option>
+                                      <option value="monks">Monk</option>
+                                      <option value="redMages">Red Mage</option>
+                                      <option value="summoners">Summoner</option>
+                                      <option value="blackMages">Black Mage</option>
+                                      <option value="bards">Bard</option>
+                                      <option value="machinists">Machinist</option>
+                                    </select><br>
+                                    <button type="submit" name="button">Submit</button>
+                                  </fieldset>
+                                </form>
+                              </div>
+                            </div>
+                          </div>`;
+    $('.content-root').html(signupPage);
   }
 
   function renderAccountPage() {
@@ -274,6 +324,9 @@ function render(state) {
     renderHeader();
     renderAccountPage();
     addApplicantsToAccountPage();
+  } else if (state.activePage === 'signup') {
+    renderHeader();
+    renderSignupPage();
   }
 }
 
@@ -282,6 +335,14 @@ function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState, 'account-members');
+    render(appState);
+    eventHandlers();
+  });
+  $('#signup-link').on('click', e => {
+    e.preventDefault;
+    // hack to cause a render change in the header account controls
+    setMyId(appState, 'pending');
+    setActivePage(appState, 'signup');
     render(appState);
     eventHandlers();
   });
@@ -318,9 +379,14 @@ function eventHandlers() {
         updateState(appState, res);
         render(appState);
         eventHandlers();
-        alert('Good luck!');
+        alert('Application Submitted: Good luck!');
       });
     });
+  });
+  $('.content-root .js-signup-form').on('submit', e => {
+    e.preventDefault();
+    const formData = $(e.currentTarget).serializeArray();
+    console.log(formData);
   });
   $('.content-root .js-team-accept').on('click', e => {
     e.preventDefault();

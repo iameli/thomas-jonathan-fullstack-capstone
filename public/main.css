@@ -199,3 +199,39 @@ header {
 .team-member-controls {
   padding-top: 1em;
 }
+
+.form-container {
+  padding: 3em;
+}
+.signup-form {
+  box-shadow: 3px 3px 3px 3px rgba(10, 10, 10, 0.2);
+  width: 40em;
+  margin: 0 auto;
+  border-radius: 3px;
+  text-align: center;
+  background:
+}
+.signup-form fieldset {
+  border: 0;
+  padding: 2em;
+}
+.signup-form input, .signup-form select {
+  padding: 0.5em 0em;
+  margin: 1em 0em;
+  display: inline-block;
+  width: 25em;
+  height: 4em;
+  vertical-align: top;
+}
+.signup-form button {
+  margin: 1.5em;
+  width: 25em;
+  height: 4em;
+  padding: 0.75em;
+  border: 1px solid #318689;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px rgba(10, 10, 10, 0.2);
+  background-color: #318689;
+  color: #f2f2f2;
+  letter-spacing: .1em;
+}
