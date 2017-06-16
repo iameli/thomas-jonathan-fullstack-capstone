@@ -36,7 +36,7 @@ playerClass: The classes the User's character has leveled.
 
 ### Get Raid Data:
 Similar to getting user data, but using **/raid** and **/raid/(specific raid id)**. Data returned will be in the format of
-**{id, name, leader, time, applicants[], members{tanks[], healers[], dps[]}}.
+**{id, name, leader, time, applicants[], members{tanks[], healers[], dps[]}}**.
 
 id: The raids database id
 name: The name of the raid
