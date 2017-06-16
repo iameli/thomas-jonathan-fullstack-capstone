@@ -198,24 +198,6 @@ describe('MVP', function() {
        });
     });
 
-    it.only('should return user that is signed in', function() {
-      let agent = chai.request.agent(app);
-      return agent
-				.get('/auth/login') // first have to log in
-				.auth('testuser', 'test-password')
-        .then(res => {
-          return agent.get('/user/me/foobar')
-          .then(res => {
-            console.log(res);
-            res.should.have.status(200);
-            // res.body.user.username.should.equal('testuser');
-            // res.body.user.should.include.keys(
-            //   'username','email', 'playerName', 'playerClass'
-            // );
-          });
-        });
-    });
-
     it('should update a user\'s\ team when accepted', function() {
       let testUser;
       let testRaid;
@@ -223,38 +205,27 @@ describe('MVP', function() {
       return agent
        .get('/auth/login')
        .auth('testuser', 'test-password')
-       //.send()
-       .then((result) => {
-         console.log(result);
-         return agent.get('/user/me/foobar')
+       .then(() => {
+         return User
+           .findOne()
+           .exec();
+       })
+         .then(user => {
+           testUser = user;
+           return Raid.findOne()
+             .exec();
+         })
+         .then(raid => {
+           testRaid = raid;
+           return agent
+             .put(`/auth/user/${raid._id}/${testUser._id}`);
+         })
          .then(res => {
-           console.log(res);
            res.should.have.status(200);
+           res.should.be.json;
+           res.body.should.be.a('object');
+           res.body.team.should.equal(testRaid._id.toString());
          });
-        //  return User
-        //   .findOne()
-        //   .exec()
-        //   .then(user => {
-        //     testUser = user;
-        //     return Raid.findOne()
-        //      .exec()
-        //      .then(raid => {
-        //        testRaid = raid;
-        //        return agent
-        //          .put(`/user/${raid._id}/${testUser._id}`)
-        //          .auth('testuser', 'test-password')
-        //          .send()
-        //          .then(res => {
-        //           //  console.log(res);
-        //            res.should.have.status(200);
-        //            res.should.be.json;
-        //            res.body.should.be.a('object');
-        //            res.body.team.should.equal(raid._id.toString());
-        //          });
-        //      });
-        //   });
-       });
-
     });
 
     it('should create a user', function() {
@@ -339,13 +310,18 @@ describe('MVP', function() {
 
     it('should add a user to applicants', function() {
       let applicant = '';
+      let agent = chai.request.agent(app);
 
-      return Raid.findOne()
-        .exec()
+      return agent.get('/auth/login')
+       .auth('testuser', 'test-password')
+       .then(() => {
+         return Raid.findOne()
+        .exec();
+       })
         .then(raid => {
           applicant = raid.jobs.dragoons[0];
-          return chai.request(app)
-            .put(`/raid/${raid.id}/${applicant}`);
+          return agent
+            .put(`/auth/raid/${raid.id}/${applicant}`);
         })
         .then(res => {
           let check = false;
@@ -354,7 +330,7 @@ describe('MVP', function() {
               check = true;
             }
           });
-          res.should.have.status(201);
+          res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
           check.should.be.true;
