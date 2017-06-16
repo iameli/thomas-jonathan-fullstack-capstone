@@ -6,13 +6,22 @@ Find the demo app at https://thomas-jonathan-capstone.herokuapp.com/
 
 Raid.io is a handy way to find, apply, create, and manage your FFXIV raid teams. You can get rid of all those messy google docs and spreadsheets and manage your team from a single application.
 
+Streamlines the process of finding other players to join up with for raids. Currently there is no central hub for the hundreds of thousands of active players to do this.
+
 Our MVP is targeted specifically at FFIV players but in the future is easily expandable to a wide variety of MMOs.
 
 ## Design and Screengrabs
 
-Color Palette:
+###Color Palette:
 
-![color palette](demo/fullstack_capstone_palette.pdf)
+[color palette](demo/fullstack_capstone_palette.pdf)
+
+###HTML Mockups:
+
+[User Page Mockup](views/userpage.html)
+[Sign Up Page Mockup](views/signup.html)
+
+### Screengrabs
 
 Current teams are listed on the homepage:
 
@@ -45,7 +54,7 @@ data.
 ### Get User Data:
 Send an ajax request with a get method to **/user** to receive data on all users or to **/user/(specific user id)** to retrieve data on a particular user. User data will be returned as a json object with data
 
-**{id, username, discord, playerName{firstName, lastName},playerClass[{className, level}]}, team(if they're on one)**.
+`{ id, username, discord, playerName{ firstName, lastName }, playerClass[ { className, level } ] }, team( if they're on one )`
 
 id: User's unique database id
 username: User's username
@@ -57,7 +66,7 @@ playerClass: The classes the User's character has leveled.
 ### Get Raid Data:
 Similar to getting user data, but using **/raid** and **/raid/(specific raid id)**. Data returned will be in the format of
 
-**{id, name, leader, time, applicants[], members{tanks[], healers[], dps[]}}**.
+`{ id, name, leader, time, applicants[], members{ tanks[], healers[], dps[] } }`.
 
 id: The raids database id
 name: The name of the raid
@@ -79,7 +88,6 @@ To delete a user from a raid field, create an ajax request with a delete method 
 To add a user specifically to the applicants field, create an ajax request with a put method to **/raid/(raid id)/(user id)**.
 
 
-
 ## the Stack
 
 * **The Front End**
@@ -97,3 +105,18 @@ To add a user specifically to the applicants field, create an ajax request with 
 * **Dev Process**
   * Pretty simple tooling:
     * Atom & Postman for most everything.
+
+## Lessons Learned
+
+* **Process, Planning, Development, Coordination**
+  * Plan moar
+  * Use simple, working solutions first, only refactor when it works
+  * Map out in advance a strict endpoint format
+* **Development and Technology**
+  * Cons:
+    * jQuery really starts to feel cumbersome and hard to manage state.
+    * Using Mongo--even simple data relations get very tricky to interact with, even with Mongoose.
+* **Next Steps**
+  * Flesh out auth and login process.
+  * Implement more of the backend features into the front end.
+  * Once that is fleshed out, there is a lot more data that we can add to our objects.
