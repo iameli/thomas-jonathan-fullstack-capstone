@@ -128,7 +128,238 @@ const usersToCreate = [
       lastName: faker.name.firstName()
     },
     playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
-  }
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'paladin', level: 60}, {className: 'monk', level: 60}, {className: 'dragoon', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'scholar', level: 60}, {className: 'darkKnight', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'ninja', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'ninja', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'whiteMage', level: 60}, {className: 'darkKnight', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'blackMage', level: 60}, {className: 'monk', level: 60}, {className: 'warrior', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
+  {
+    username: faker.internet.userName(),
+    password: '$2a$10$8ciUi0cDTg3yLvoKkYAxmOu5ihC7xnZ8TOdDSAOQ0giD0pd7l7mo2',
+    email: faker.internet.email(),
+    discord: 'screenname#1234',
+    playerName: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.firstName()
+    },
+    playerClass: [{className: 'dragoon', level: 60}, {className: 'redMage', level: 60}, {className: 'bard', level: 60}],
+  },
 ];
 
 function tearDownDb() {
@@ -142,21 +373,53 @@ function tearDownDb() {
 
 function seedRaidData(data) {
   console.log('seeding raid data');
-  let testRaid = {
-    name: faker.company.companyName(),
-    leader: data[0]._id,
-    applicants: [
-      data[3].id, data[8]._id
-    ],
-    jobs: {
-      darkKnights: [data[4]._id],
-      warriors: [data[5]._id],
-      whiteMages: [data[7]._id],
-      ninjas: [data[6]._id],
-      dragoons: [data[1]._id,data[2]._id],
-      monks: [data[0]._id]
+  let testRaid = [
+    {
+      name: faker.company.companyName(),
+      leader: data[0]._id,
+      applicants: [
+        data[3].id, data[8]._id
+      ],
+      jobs: {
+        darkKnights: [data[4]._id],
+        warriors: [data[5]._id],
+        whiteMages: [data[7]._id],
+        ninjas: [data[6]._id],
+        dragoons: [data[1]._id,data[2]._id],
+        monks: [data[0]._id]
+      }
+    },
+    {
+      name: faker.company.companyName(),
+      leader: data[18]._id,
+      applicants: [
+        data[12].id, data[17]._id
+      ],
+      jobs: {
+        darkKnights: [data[13]._id],
+        warriors: [data[14]._id],
+        whiteMages: [data[16]._id],
+        ninjas: [data[15]._id],
+        dragoons: [data[10]._id,data[11]._id],
+        monks: [data[18]._id]
+      }
+    },
+    {
+      name: faker.company.companyName(),
+      leader: data[19]._id,
+      applicants: [
+        data[22].id, data[27]._id
+      ],
+      jobs: {
+        darkKnights: [data[23]._id],
+        warriors: [data[24]._id],
+        whiteMages: [data[26]._id],
+        ninjas: [data[25]._id],
+        dragoons: [data[20]._id,data[21]._id],
+        monks: [data[19]._id]
+      }
     }
-  };
+  ];
   return Raid.create(testRaid);
 }
 

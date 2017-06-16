@@ -82,6 +82,7 @@ function createUser(reqObj) {
 //   myApplicants.splice(indexToSplice, 1);
 //   return myApplicants;
 // }
+
 // IN WHICH WE MODIFY THE STATE
 function updateState(state, data) {
   state.raidTeams = data;
