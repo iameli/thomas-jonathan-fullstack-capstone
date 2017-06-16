@@ -11,6 +11,7 @@ mongoose.Promise = global.Promise;
 router.use(bodyParser.json());
 
 //Apply
+  
 router.put('/:id/:userId', (req, res) => {
   Raid
    .findByIdAndUpdate(req.params.id, {$push: { applicants: req.params.userId } }, {new: true})
