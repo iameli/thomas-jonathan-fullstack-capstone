@@ -68,7 +68,6 @@ function seedRaidData(data) {
   };
 
   return Raid.create(testRaid);
-    // });
 }
 
 describe('MVP', function() {
@@ -93,6 +92,10 @@ describe('MVP', function() {
     return closeServer();
   });
 
+  /**
+  *   TESTS FOR ROOT URL
+  *
+  **/
   describe('Root URL', function() {
     it('should respond with a status of 200 and HTML', function() {
       return chai.request(app)
@@ -104,7 +107,10 @@ describe('MVP', function() {
     });
   });
 
-  //Tests for user router
+  /**
+  *   TESTS FOR USER ROUTER
+  *
+  **/
   describe('User endpoint', function() {
 
     it('should return with an array of users', function() {
@@ -208,7 +214,10 @@ describe('MVP', function() {
     });
   });
 
-  //Tests for raid router
+  /**
+  *   TESTS FOR RAID ROUTER
+  *
+  **/
   describe('Raid endpoint', function() {
 
     it('should return with an array of teams', function() {
