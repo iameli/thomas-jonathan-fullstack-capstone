@@ -7,24 +7,24 @@ Find the demo app at https://thomas-jonathan-capstone.herokuapp.com/
 Raid.io is a handy way to find, apply, create, and manage your FFXIV raid team.
 
 Current teams are listed on the homepage:
-[Home page scroll screengrab](demo/HomePageScroll.gif)
+![Home page scroll screengrab](demo/HomePageScroll.gif)
 Signup for an account and add your player info:
-[Sign up for an account screengrab](demo/HomePageScroll.gif)
+![Sign up for an account screengrab](demo/HomePageScroll.gif)
 Then apply to whatever team you like:
-[Apply to a team screengrab](demo/Apply.gif)
+![Apply to a team screengrab](demo/Apply.gif)
 As a user you can view your profile:
-[View my profile screengrab](demo/MyAccount.gif)
+![View my profile screengrab](demo/MyAccount.gif)
 And you can also manage your team:
-[View my team](demo/MyTeam.gif)
+![View my team](demo/MyTeam.gif)
 Accepting members or rejecting them:
-[Reject or accept applicants](demo/RejectAccept.gif)
+![Reject or accept applicants](demo/RejectAccept.gif)
 
 ## the API
 Our RESTful API has various endpoints that allow for the creation of a user(sign up), the querying of user and raid team data, and updating team
 data.
 
 ### Get User Data:
-Send an ajax request with a get method to **/user** to receive data on all users or to **/user/(specific user id)** to retrieve data on a particular user. User data will be returned as a json object with data 
+Send an ajax request with a get method to **/user** to receive data on all users or to **/user/(specific user id)** to retrieve data on a particular user. User data will be returned as a json object with data
 
 **{id, username, discord, playerName{firstName, lastName},playerClass[{className, level}]}, team(if they're on one)**.
 
