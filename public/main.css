@@ -154,6 +154,10 @@ header {
   text-decoration: none;
 }
 
+.role-select-form fieldset {
+  width: 40em;
+  margin-left: 19.5em;
+}
 /*Home Page Filters Styling*/
 .filter-box {
   position: relative;
