@@ -5,7 +5,7 @@ const appState = {
   activePage: '',
   myTeam: {},
   myUser: {},
-  myUserId: 'stuff'
+  myUserId: ''
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
@@ -91,6 +91,9 @@ function setActivePage(state, pageName) {
 }
 function setMyTeam(state, myNewTeam) {
   state.myTeam = myNewTeam;
+}
+function setMyUser(state, myNewUser) {
+  state.myUser = myNewUser;
 }
 function setMyId(state, myId) {
   state.myUserId = myId;
@@ -199,26 +202,36 @@ function render(state) {
                           </div>`;
     $('.content-root').html(signupPage);
   }
-
   function renderMyProfile() {
+    const myUser = state.myUser;
+    const navBar = `<div class="row nav-bar">
+                      <nav aria-label="Navigation bar" role="navigation">
+                        <ul class="nav-list">
+                          <li><a id="my-profile-link" class="nav-tab" href="#" aria-label="Go to my profile">My Profile</a></li>
+                          <li><a id="my-team-link" class="nav-tab" href="#" aria-label="Go to my team">My Team</a></li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <br>`;
+
     const myProfile = `  <div class="row">
                           <div class="my-profile">
                             <div class="col-6 column-left">
                                 <img class="team-member-thumb" src="http://placehold.it/500x500" alt="My profile image">
                             </div>
                             <div class="col-6 column-right">
-                              <h3>This is my username!</h3>
+                              <h3>${myUser.playerName.firstName} ${myUser.playerName.lastName}</h3>
                               <ul>
-                                <li>this is my email</li>
-                                <li>this is my discord screenname</li>
+                                <li>${myUser.email}</li>
+                                <li>${myUser.discord}</li>
                               </ul>
-                              <h5>this is my playerName</h5>
-                              <h5>this is my playerClass</h5>
+                              <h5>${myUser.username}</h5>
+                              <h5>${myUser.playerClass[0].className} @lvl${myUser.playerClass[0].level}</h5>
                               <p>Meggings microdosing XOXO sartorial butcher hot chicken post-ironic, drinking vinegar asymmetrical lomo hashtag hexagon. Drinking vinegar hexagon coloring book franzen. Et photo booth lumbersexual, irony chartreuse beard tumblr magna cliche post-ironic. Occupy locavore forage, scenester eu mumblecore kale chips. Esse you probably haven't heard of them id +1 try-hard next level. Jianbing edison bulb readymade, dreamcatcher kale chips adipisicing chartreuse typewriter godard lyft dolor williamsburg bespoke anim. Austin aute vice ennui, plaid dolore mlkshk man braid in.</p>
                             </div>
                           </div>
                         </div>`;
-    $('.content-root').html(myProfile);
+    $('.content-root').html(navBar + myProfile);
   }
 
   function renderAccountPage() {
@@ -226,8 +239,8 @@ function render(state) {
     const navBar = `<div class="row nav-bar">
                       <nav aria-label="Navigation bar" role="navigation">
                         <ul class="nav-list">
-                          <li><a class="nav-tab" href="#" aria-label="Go to my profile">My Profile</a></li>
-                          <li><a class="nav-tab" href="#" aria-label="Go to my team">My Team</a></li>
+                          <li><a id="my-profile-link" class="nav-tab" href="#" aria-label="Go to my profile">My Profile</a></li>
+                          <li><a id="my-team-link" class="nav-tab" href="#" aria-label="Go to my team">My Team</a></li>
                         </ul>
                       </nav>
                     </div>
@@ -378,9 +391,12 @@ function render(state) {
 function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
-    setActivePage(appState, 'account-myteam-members');
-    render(appState);
-    eventHandlers();
+    return fetchUser(appState.myUserId).then(res => {
+      setMyUser(appState, res);
+      setActivePage(appState, 'account-my-profile');
+      render(appState);
+      eventHandlers();
+    });
   });
   $('#signup-link').on('click', e => {
     e.preventDefault;
@@ -408,6 +424,18 @@ function eventHandlers() {
   $('#team-applicants-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState,'account-myteam-applicants');
+    render(appState);
+    eventHandlers();
+  });
+  $('#my-profile-link').on('click', e => {
+    e.preventDefault();
+    setActivePage(appState, 'account-my-profile');
+    render(appState);
+    eventHandlers();
+  });
+  $('#my-team-link').on('click', e => {
+    e.preventDefault();
+    setActivePage(appState, 'account-myteam-members');
     render(appState);
     eventHandlers();
   });
@@ -446,8 +474,9 @@ function eventHandlers() {
       }
     };
     return createUser(reqBody).then(res => {
+      setMyUser(appState, res);
       setMyId(appState, res.id);
-      setActivePage(appState, 'home');
+      setActivePage(appState, 'account-my-profile');
       render(appState);
       eventHandlers();
     });
