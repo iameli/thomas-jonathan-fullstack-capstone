@@ -7,16 +7,27 @@ Find the demo app at https://thomas-jonathan-capstone.herokuapp.com/
 Raid.io is a handy way to find, apply, create, and manage your FFXIV raid team.
 
 Current teams are listed on the homepage:
+
 ![Home page scroll screengrab](demo/HomePageScroll.gif)
+
 Signup for an account and add your player info:
+
 ![Sign up for an account screengrab](demo/HomePageScroll.gif)
+
 Then apply to whatever team you like:
+
 ![Apply to a team screengrab](demo/Apply.gif)
+
 As a user you can view your profile:
+
 ![View my profile screengrab](demo/MyAccount.gif)
+
 And you can also manage your team:
+
 ![View my team](demo/MyTeam.gif)
+
 Accepting members or rejecting them:
+
 ![Reject or accept applicants](demo/RejectAccept.gif)
 
 ## the API
