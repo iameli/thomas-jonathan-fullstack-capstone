@@ -8,6 +8,8 @@ const appState = {
 };
 
 // IN WHICH WE MAKE AJAX REQUESTS
+
+// /raid endpoints
 function fetchTeams() {
   return $.ajax({
     method: 'GET',
@@ -36,6 +38,17 @@ function removeApplicant(teamId, applicantId) {
   return $.ajax({
     method: 'DELETE',
     url: `/raid/${teamId}/applicants/${applicantId}`
+  });
+}
+
+// /user endpoints
+function createUser(reqObj) {
+  return $.ajax({
+    method: 'POST',
+    url: '/user',
+    contentType: 'application/json',
+    data: JSON.stringify(reqObj),
+    dataType: 'json'
   });
 }
 // function updateTeam(teamId, body) {
@@ -155,21 +168,21 @@ function render(state) {
                                     <input type="text" name="player-last-name"><br>
                                     <label for="select-player-class">Select Player Class:</label><br>
                                     <select name="select-player-class">
-                                      <option value="paladins">Paladin</option>
-                                      <option value="warriors">Warrior</option>
-                                      <option value="darkKnights">Dark Night</option>
-                                      <option value="whiteMages">White Mage</option>
-                                      <option value="scholars">Scholar</option>
-                                      <option value="astrologians">Astrologian</option>
-                                      <option value="ninjas">Ninja</option>
-                                      <option value="dragoons">Dragoon</option>
-                                      <option value="samurais">Samurai</option>
-                                      <option value="monks">Monk</option>
-                                      <option value="redMages">Red Mage</option>
-                                      <option value="summoners">Summoner</option>
-                                      <option value="blackMages">Black Mage</option>
-                                      <option value="bards">Bard</option>
-                                      <option value="machinists">Machinist</option>
+                                      <option value="paladin">Paladin</option>
+                                      <option value="warrior">Warrior</option>
+                                      <option value="darkKnight">Dark Night</option>
+                                      <option value="whiteMage">White Mage</option>
+                                      <option value="scholar">Scholar</option>
+                                      <option value="astrologian">Astrologian</option>
+                                      <option value="ninja">Ninja</option>
+                                      <option value="dragoon">Dragoon</option>
+                                      <option value="samurai">Samurai</option>
+                                      <option value="monk">Monk</option>
+                                      <option value="redMage">Red Mage</option>
+                                      <option value="summoner">Summoner</option>
+                                      <option value="blackMage">Black Mage</option>
+                                      <option value="bard">Bard</option>
+                                      <option value="machinist">Machinist</option>
                                     </select><br>
                                     <button type="submit" name="button">Submit</button>
                                   </fieldset>
@@ -386,7 +399,27 @@ function eventHandlers() {
   $('.content-root .js-signup-form').on('submit', e => {
     e.preventDefault();
     const formData = $(e.currentTarget).serializeArray();
-    console.log(formData);
+    const reqBody = {
+      username: formData[0].value,
+      password: formData[1].value,
+      email: formData[2].value,
+      discord: formData[3].value,
+      playerName: {
+        firstName: formData[4].value,
+        lastName: formData[5].value
+      },
+      //hardcoding for DEMO
+      playerClass: {
+        className: formData[6].value,
+        level: 60
+      }
+    };
+    return createUser(reqBody).then(res => {
+      setMyId(appState, res.id);
+      setActivePage(appState, 'home');
+      render(appState);
+      eventHandlers();
+    });
   });
   $('.content-root .js-team-accept').on('click', e => {
     e.preventDefault();
