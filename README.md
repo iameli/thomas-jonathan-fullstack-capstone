@@ -23,8 +23,8 @@ Our RESTful API has various endpoints that allow for the creation of a user(sign
 data.
 
 ### Get User Data:
-Send an ajax request with a get method to **/user** to receive data on all users or to **/user/(specific user id)** to retrieve data on a particular
-user. User data will be returned as a json object with data 
+Send an ajax request with a get method to **/user** to receive data on all users or to **/user/(specific user id)** to retrieve data on a particular user. User data will be returned as a json object with data 
+
 **{id, username, discord, playerName{firstName, lastName},playerClass[{className, level}]}, team(if they're on one)**.
 
 id: User's unique database id
@@ -36,6 +36,7 @@ playerClass: The classes the User's character has leveled.
 
 ### Get Raid Data:
 Similar to getting user data, but using **/raid** and **/raid/(specific raid id)**. Data returned will be in the format of
+
 **{id, name, leader, time, applicants[], members{tanks[], healers[], dps[]}}**.
 
 id: The raids database id
