@@ -23,12 +23,6 @@ function fetchTeam(teamId) {
     url: `/raid/${teamId}`
   });
 }
-function fetchUser(userId) {
-  return $.ajax({
-    method: 'GET',
-    url: `/user/${userId}`
-  });
-}
 function applyToTeam(teamId, applicantId) {
   return $.ajax({
     method: 'PUT',
@@ -49,6 +43,12 @@ function removeApplicant(teamId, applicantId) {
 }
 
 // /user endpoints
+function fetchUser(userId) {
+  return $.ajax({
+    method: 'GET',
+    url: `/user/${userId}`
+  });
+}
 function createUser(reqObj) {
   return $.ajax({
     method: 'POST',
@@ -58,30 +58,6 @@ function createUser(reqObj) {
     dataType: 'json'
   });
 }
-// function updateTeam(teamId, body) {
-//   return $.ajax({
-//     contentType: 'application/json',
-//     method: 'PUT',
-//     url: `/raid/${teamId}`,
-//     data: JSON.stringify(body),
-//     dataType: 'json'
-//   });
-// }
-
-// IN WHICH WE PERFORM FUNCTIONS RELATED TO AJAX REQUESTS
-
-// splice out an applicant from array of applicants
-// function spliceApplicant(state, applicantId) {
-//   const myApplicants = state.myTeam.applicants;
-//   let indexToSplice;
-//   myApplicants.forEach(applicant => {
-//     if (applicantId === applicant._id) {
-//       indexToSplice = myApplicants.indexOf(applicant);
-//     }
-//   });
-//   myApplicants.splice(indexToSplice, 1);
-//   return myApplicants;
-// }
 
 // IN WHICH WE MODIFY THE STATE
 function updateState(state, data) {
@@ -99,6 +75,7 @@ function setMyUser(state, myNewUser) {
 function setMyId(state, myId) {
   state.myUserId = myId;
 }
+
 // IN WHICH WE RENDER
 function render(state) {
   function renderHeader() {
@@ -236,7 +213,6 @@ function render(state) {
   }
 
   function renderAccountPage() {
-    // HTML components
     const navBar = `<div class="row nav-bar">
                       <nav aria-label="Navigation bar" role="navigation">
                         <ul class="nav-list">
@@ -389,6 +365,8 @@ function render(state) {
 }
 
 // IN WHICH WE HANDLE THE EVENTS
+
+// nav bar links
 function eventHandlers() {
   $('#account-link').on('click', e => {
     e.preventDefault();
@@ -416,6 +394,8 @@ function eventHandlers() {
       eventHandlers();
     });
   });
+
+  // account page links
   $('#team-members-link').on('click', e => {
     e.preventDefault();
     setActivePage(appState,'account-myteam-members');
@@ -440,6 +420,44 @@ function eventHandlers() {
     render(appState);
     eventHandlers();
   });
+
+  // my team controls
+  $('.content-root .js-team-accept').on('click', e => {
+    e.preventDefault();
+    $(e.currentTarget).closest('div').next().find('form').show();
+  });
+  $('.content-root .js-team-reject').on('click', e => {
+    e.preventDefault();
+    const myApplicantId = e.currentTarget.closest('[data-id]').dataset.id;
+    const myTeamId = appState.myTeam.id;
+    // Below can be used for PUT endpoint
+
+    return removeApplicant(myTeamId, myApplicantId).then(res => {
+      setMyTeam(appState, res);
+      render(appState);
+      eventHandlers();
+    });
+  });
+  $('.content-root .role-select-form').on('submit', e => {
+    e.preventDefault();
+    const criteria = $(e.currentTarget).serializeArray();
+    const newClassName = criteria[0].value;
+    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
+    const myTeamId = appState.myTeam.id;
+    return acceptApplicant(myTeamId, applicantId, newClassName).then(res => {
+      return removeApplicant(myTeamId, applicantId).then(res => {
+        setMyTeam(appState, res);
+        render(appState);
+        eventHandlers();
+      });
+    });
+
+  });
+  $('.content-root .cancel-btn').on('click', e => {
+    $(e.currentTarget).closest('form').hide();
+  });
+}
+
   $('.content-root .js-team-apply').on('click', e => {
     e.preventDefault;
     const newTeamId = e.currentTarget.closest('[data-id]').dataset.id;
@@ -456,6 +474,7 @@ function eventHandlers() {
       });
     });
   });
+
   $('.content-root .js-signup-form').on('submit', e => {
     e.preventDefault();
     const formData = $(e.currentTarget).serializeArray();
@@ -482,54 +501,7 @@ function eventHandlers() {
       eventHandlers();
     });
   });
-  $('.content-root .js-team-accept').on('click', e => {
-    e.preventDefault();
-    $(e.currentTarget).closest('div').next().find('form').show();
-  });
-  $('.content-root .js-team-reject').on('click', e => {
-    e.preventDefault();
-    const myApplicantId = e.currentTarget.closest('[data-id]').dataset.id;
-    const myTeamId = appState.myTeam.id;
-    // Below can be used for PUT endpoint
 
-    // const requestBody = {
-    //   applicants: spliceApplicant(appState, applicantId)
-    // };
-    // return updateTeam(myTeamId,requestBody).then(res => {
-    //   setMyTeam(appState, res);
-    //   render(appState);
-    //   eventHandlers();
-    // });
-
-    return removeApplicant(myTeamId, myApplicantId).then(res => {
-      setMyTeam(appState, res);
-      render(appState);
-      eventHandlers();
-    });
-  });
-  $('.content-root .role-select-form').on('submit', e => {
-    e.preventDefault();
-    const criteria = $(e.currentTarget).serializeArray();
-    const newClassName = criteria[0].value;
-    const applicantId = e.currentTarget.closest('[data-id]').dataset.id;
-    const myTeamId = appState.myTeam.id;
-    // const requestBody = {
-    //   // applicants: spliceApplicant(appState, applicantId),
-    //   [newClassName]: ''
-    // };
-    return acceptApplicant(myTeamId, applicantId, newClassName).then(res => {
-      return removeApplicant(myTeamId, applicantId).then(res => {
-        setMyTeam(appState, res);
-        render(appState);
-        eventHandlers();
-      });
-    });
-
-  });
-  $('.content-root .cancel-btn').on('click', e => {
-    $(e.currentTarget).closest('form').hide();
-  });
-}
 // IN WHICH WE LOAD
 function initialLoad() {
   return fetchTeams().then(res => {
@@ -544,16 +516,3 @@ function initialLoad() {
 $(function() {
   initialLoad();
 });
-
-
-
-// Testing out some variations
-// const initialLoad = new Promise((resolve, reject) => {
-//   return fetchTeams(function(data){
-//     //dostuff
-//     appState.raidTeams = data;
-//     resolve(appState)
-//   })
-// })
-//
-// return Promise.resolve(fetchTeams(loadData)).then(() => render(appState));
