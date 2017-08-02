@@ -6,9 +6,9 @@ Find the demo app at https://thomas-jonathan-capstone.herokuapp.com/
 
 Raid.io is a handy way to find, apply, create, and manage your FFXIV raid teams. You can get rid of all those messy google docs and spreadsheets and manage your team from a single application.
 
-Streamlines the process of finding other players to join up with for raids. Currently there is no central hub for the hundreds of thousands of active players to do this.
+It streamlines the process of finding other players to join up with for raids. Currently there is no central hub for the hundreds of thousands of active players to do this.
 
-Our MVP is targeted specifically at FFIV players but in the future is easily expandable to a wide variety of MMOs.
+Our MVP is targeted specifically at FFXIV players but in the future is easily expandable to a wide variety of MMOs.
 
 ## Design and Screengrabs
 
